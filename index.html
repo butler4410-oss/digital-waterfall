@@ -59,53 +59,23 @@
   .page.active{display:block;animation:fadeInUp .3s ease-out}
   @keyframes fadeInUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-  /* ─── Dashboard Command Center ─── */
-  .dash-hero{background:#fff;border:1px solid #e8ecf1;border-radius:24px;padding:0;overflow:hidden;position:relative;margin-bottom:24px;box-shadow:0 4px 24px rgba(0,0,0,.04)}
-  .dash-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 40%,rgba(6,182,212,.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 60%,rgba(124,58,237,.03) 0%,transparent 50%);pointer-events:none;z-index:1}
-  .dash-hero::after{content:none}
-  #waterfall-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
-
-  .dash-hero-top{position:relative;z-index:3;padding:36px 44px 0;display:flex;align-items:flex-start;justify-content:space-between}
-  .dash-live{display:flex;align-items:center;gap:8px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:20px;padding:6px 16px;font-size:11px;font-weight:600;color:#059669;letter-spacing:.5px;text-transform:uppercase}
-  .live-dot{width:8px;height:8px;border-radius:50%;background:#10b981;animation:livePulse 2s ease-in-out infinite}
+  /* ─── Dashboard ─── */
+  .dash-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .dash-stat-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.03);transition:all .2s}
+  .dash-stat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateY(-1px)}
+  .dash-stat-card:first-child{border-left:3px solid #0891b2}
+  .dash-stat-label{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+  .dash-stat-value{font-size:28px;font-weight:700;color:#0f172a;line-height:1}
+  .dash-stat-value.sms{color:#0891b2}
+  .dash-stat-value.email{color:#7c3aed}
+  .dash-stat-value.print{color:#d97706}
+  .dash-stat-sub{font-size:11px;color:#94a3b8;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px}
+  .dash-live{display:inline-flex;align-items:center;gap:6px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:20px;padding:4px 10px;font-size:10px;font-weight:600;color:#059669;letter-spacing:.5px;text-transform:uppercase}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:#10b981;animation:livePulse 2s ease-in-out infinite}
   @keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(16,185,129,.3)}50%{opacity:.8;box-shadow:0 0 0 6px rgba(16,185,129,0)}}
-  .dash-throughput{font-size:12px;color:#64748b;font-weight:500;margin-left:12px;padding-left:12px;border-left:1px solid #e2e8f0}
-  .dash-time{font-size:12px;color:#94a3b8}
-
-  .dash-hero-stats{position:relative;z-index:3;padding:32px 44px 0;text-align:center}
-  .hero-number{font-size:72px;font-weight:800;color:#0f172a;line-height:1;letter-spacing:-2px;margin-bottom:4px}
-  .hero-label{font-size:14px;color:#94a3b8;font-weight:500;letter-spacing:.3px}
-
-  .dash-channels{position:relative;z-index:3;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:32px 44px 0}
-  .channel-card{background:#f8fafc;border:1px solid #e8ecf1;border-radius:16px;padding:20px 24px;transition:all .2s}
-  .channel-card:hover{background:#f0f4f8;border-color:#cbd5e1;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.04)}
-  .channel-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  .channel-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
-  .channel-icon.sms{background:#ecfeff;color:#0891b2}
-  .channel-icon.email{background:#f5f3ff;color:#7c3aed}
-  .channel-icon.print{background:#fffbeb;color:#d97706}
-  .channel-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
-  .channel-pct{font-size:32px;font-weight:700;line-height:1}
-  .channel-pct.sms{color:#0891b2}
-  .channel-pct.email{color:#7c3aed}
-  .channel-pct.print{color:#d97706}
-  .channel-name{font-size:12px;color:#64748b;font-weight:500;margin-bottom:10px}
-  .channel-count{font-size:11px;color:#94a3b8;display:block;margin-bottom:12px}
-  .channel-bar{height:4px;background:#e8ecf1;border-radius:2px;overflow:hidden}
-  .channel-fill{height:100%;border-radius:2px;transition:width 1.5s cubic-bezier(.22,1,.36,1)}
-  .channel-fill.sms{background:linear-gradient(90deg,#06b6d4,#22d3ee)}
-  .channel-fill.email{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
-  .channel-fill.print{background:linear-gradient(90deg,#d97706,#fbbf24)}
-
-  .dash-wf-section{position:relative;z-index:3;padding:32px 44px 36px}
-  .dash-wf-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-  .dash-wf-title{font-size:13px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:1px}
 
   .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
-  .dash-card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:all .2s;overflow:hidden}
-  .dash-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07)}
-  .dash-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-  .dash-card-header h3{font-size:14px;font-weight:700;color:#0f172a}
+  @media(max-width:900px){.dash-summary{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}}
 
   .activity-feed{max-height:340px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.1) transparent}
   .activity-feed::-webkit-scrollbar{width:4px}
@@ -177,35 +147,9 @@
   .tab-bar.dark button{color:#64748b}
   .tab-bar.dark button.active{background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 
-  /* ─── Waterfall (Clean Card) ─── */
-  .waterfall-card{background:#fff;border:1px solid #e8ecf1;border-radius:20px;padding:40px 32px;overflow:hidden;position:relative;box-shadow:0 4px 24px rgba(0,0,0,.04)}
-  .waterfall-card::before{content:none}
-  #waterfall-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
-  .waterfall{display:flex;align-items:center;justify-content:center;gap:0;padding:16px 0;position:relative;z-index:2}
-  .tier{display:flex;flex-direction:column;align-items:center;width:180px;position:relative}
-  .tier-box{width:160px;padding:28px 16px 24px;border-radius:16px;text-align:center;position:relative;transition:transform .2s,box-shadow .2s;cursor:pointer}
-  .tier-box:hover{transform:translateY(-3px)}
-  .tier-box svg{width:36px;height:36px;margin-bottom:10px}
-  .tier-box .tier-name{font-size:13px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px}
-  .tier-box .tier-pct{font-size:30px;font-weight:700;line-height:1.1;transition:all .5s}
-  .tier-box .tier-desc{font-size:11px;opacity:.6;margin-top:2px}
-  .tier-box.sms{background:#ecfeff;color:#0891b2;border:1px solid #a5f3fc}
-  .tier-box.sms:hover{box-shadow:0 8px 24px rgba(8,145,178,.12);background:#cffafe}
-  .tier-box.email{background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe}
-  .tier-box.email:hover{box-shadow:0 8px 24px rgba(124,58,237,.12);background:#ede9fe}
-  .tier-box.print{background:#fffbeb;color:#d97706;border:1px solid #fde68a}
-  .tier-box.print:hover{box-shadow:0 8px 24px rgba(217,119,6,.12);background:#fef3c7}
-  .tier-box.disabled{opacity:.25;pointer-events:none}
 
-  .gate{display:flex;flex-direction:column;align-items:center;width:120px;gap:6px}
-  .gate-connector{display:flex;align-items:center;gap:0}
-  .gate-line{width:28px;height:2px;background:#e2e8f0;transition:background .3s}
-  .gate-node{width:34px;height:34px;border-radius:50%;background:#f0f4f8;border:2px solid #0891b2;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-  .gate-node:hover{background:#ecfeff;transform:scale(1.1);border-color:#06b6d4;box-shadow:0 0 12px rgba(8,145,178,.15)}
-  .gate-node svg{width:14px;height:14px;stroke:#0891b2;fill:none;stroke-width:2}
-  .gate-label{font-size:10px;font-weight:600;color:#0891b2;text-transform:uppercase;letter-spacing:.5px}
-  .gate-timing{font-size:14px;font-weight:600;color:#0f172a;transition:all .3s}
-  .gate-sub{font-size:10px;color:#94a3b8}
+  /* ─── Waterfall Card (used in payments) ─── */
+  .waterfall-card{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.03)}
 
   /* ─── Config Cards ─── */
   .config-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -713,10 +657,6 @@
         Dashboard
         <span class="count">3</span>
       </button>
-      <button class="nav-link" data-page="waterfall">
-        <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12l4-4 4 4M14 8l4-4 4 4"/></svg>
-        Waterfall Flow
-      </button>
       <button class="nav-link" data-page="tracker">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
         File Tracker
@@ -801,129 +741,139 @@
     <!-- ═══════════ DASHBOARD PAGE ═══════════ -->
     <div class="page active" id="page-dashboard">
 
-      <!-- Hero Command Center -->
-      <div class="dash-hero" id="wf-card-dashboard">
-        <canvas id="waterfall-canvas"></canvas>
-
-        <!-- Top bar: Live indicator + time -->
-        <div class="dash-hero-top">
-          <div class="dash-live">
-            <span class="live-dot"></span> LIVE
-            <span class="dash-throughput" id="dash-throughput">847 msg/hr</span>
-          </div>
-          <div class="dash-time" id="dash-time"></div>
+      <!-- Summary Bar -->
+      <div class="dash-summary">
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Processed Today</div>
+          <div class="dash-stat-value" id="stat-total">12,847</div>
+          <div class="dash-stat-sub"><div class="dash-live"><span class="live-dot"></span> LIVE</div> <span id="dash-throughput">847 msg/hr</span></div>
         </div>
-
-        <!-- Big hero number -->
-        <div class="dash-hero-stats">
-          <div class="hero-number" id="stat-total">12,847</div>
-          <div class="hero-label">messages processed today</div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">SMS — Tier 1</div>
+          <div class="dash-stat-value sms" id="stat-sms">78.4%</div>
+          <div class="dash-stat-sub" id="stat-sms-sub">10,073 recipients reached</div>
         </div>
-
-        <!-- Channel metric cards -->
-        <div class="dash-channels">
-          <div class="channel-card">
-            <div class="channel-top">
-              <div class="channel-icon sms"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-              <div class="channel-pct sms" id="stat-sms">78.4%</div>
-            </div>
-            <div class="channel-name">Delivered at SMS — Tier 1</div>
-            <div class="channel-count" id="stat-sms-sub">10,073 recipients reached</div>
-            <div class="channel-bar"><div class="channel-fill sms" id="sms-fill" style="width:78.4%"></div></div>
-          </div>
-          <div class="channel-card">
-            <div class="channel-top">
-              <div class="channel-icon email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-              <div class="channel-pct email" id="stat-email">16.2%</div>
-            </div>
-            <div class="channel-name">Escalated to Email — Tier 2</div>
-            <div class="channel-count" id="stat-email-sub">2,081 messages</div>
-            <div class="channel-bar"><div class="channel-fill email" id="email-fill" style="width:16.2%"></div></div>
-          </div>
-          <div class="channel-card">
-            <div class="channel-top">
-              <div class="channel-icon print"><svg viewBox="0 0 24 24"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
-              <div class="channel-pct print" id="stat-print">4.1%</div>
-            </div>
-            <div class="channel-name">Escalated to Print — Tier 3</div>
-            <div class="channel-count" id="stat-print-sub">527 letters queued</div>
-            <div class="channel-bar"><div class="channel-fill print" id="print-fill" style="width:4.1%"></div></div>
-          </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Email — Tier 2</div>
+          <div class="dash-stat-value email" id="stat-email">16.2%</div>
+          <div class="dash-stat-sub" id="stat-email-sub">2,081 messages</div>
         </div>
-
-        <!-- Waterfall flow inline -->
-        <div class="dash-wf-section">
-          <div class="dash-wf-header">
-            <div class="dash-wf-title">Waterfall Pipeline</div>
-            <div class="tab-bar" id="wf-tabs"><button class="active" data-wftab="live">Live</button><button data-wftab="simulate">Simulate</button><button data-wftab="history">History</button></div>
-          </div>
-          <div class="waterfall">
-            <div class="tier"><div class="tier-box sms" id="tier-sms">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              <div class="tier-name">SMS</div><div class="tier-pct" id="wf-sms-pct">78.4%</div><div class="tier-desc">Delivered at Tier 1</div>
-            </div></div>
-            <div class="gate">
-              <div class="gate-connector"><div class="gate-line"></div>
-                <div class="gate-node" onclick="openGateModal(1)" title="Edit Gate 1">
-                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09"/></svg>
-                </div><div class="gate-line"></div></div>
-              <div class="gate-label">Gate 1</div><div class="gate-timing" id="gate1-display">10 min</div><div class="gate-sub" id="gate1-sub">2 retries, then release</div>
-            </div>
-            <div class="tier"><div class="tier-box email" id="tier-email">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              <div class="tier-name">Email</div><div class="tier-pct" id="wf-email-pct">16.2%</div><div class="tier-desc">Caught at Tier 2</div>
-            </div></div>
-            <div class="gate">
-              <div class="gate-connector"><div class="gate-line"></div>
-                <div class="gate-node" onclick="openGateModal(2)" title="Edit Gate 2">
-                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09"/></svg>
-                </div><div class="gate-line"></div></div>
-              <div class="gate-label">Gate 2</div><div class="gate-timing" id="gate2-display">8 hours</div><div class="gate-sub" id="gate2-sub">Soft bounce retry x2</div>
-            </div>
-            <div class="tier"><div class="tier-box print" id="tier-print">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              <div class="tier-name">Print</div><div class="tier-pct" id="wf-print-pct">4.1%</div><div class="tier-desc">Final delivery</div>
-            </div></div>
-          </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Print — Tier 3</div>
+          <div class="dash-stat-value print" id="stat-print">4.1%</div>
+          <div class="dash-stat-sub" id="stat-print-sub">527 letters queued</div>
         </div>
       </div>
 
-      <!-- Below Hero: Live Feed + Journey + Quick Tracker -->
+      <!-- Two-Column: Waterfall + Activity -->
       <div class="dash-grid">
-        <!-- Live Activity Feed -->
-        <div class="dash-card">
-          <div class="dash-card-header">
-            <h3>Live Activity</h3>
-            <div class="dash-live" style="font-size:10px;padding:4px 10px"><span class="live-dot" style="width:6px;height:6px"></span> Streaming</div>
+        <!-- Left: Waterfall Pipeline -->
+        <div class="roi-card">
+          <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #f1f5f9">Waterfall Pipeline</h3>
+          <div class="vwf" style="max-width:none">
+            <!-- Tier 1: SMS -->
+            <div class="vwf-tier sms">
+              <div class="vwf-tier-top">
+                <div class="vwf-tier-icon sms"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                <div class="vwf-tier-meta"><div class="vwf-tier-label">Tier 1</div><div class="vwf-tier-name">SMS</div></div>
+                <div class="vwf-active" id="vwf-sms-status">Active</div>
+              </div>
+              <div class="vwf-metrics">
+                <div class="vwf-metric"><div class="vwf-metric-val sms" id="vwf-sms-pct">78.4%</div><div class="vwf-metric-label">Resolved</div></div>
+                <div class="vwf-metric"><div class="vwf-metric-val sms" id="vwf-sms-count">10,073</div><div class="vwf-metric-label">Delivered</div></div>
+                <div class="vwf-metric"><div class="vwf-metric-val sms" id="vwf-sms-time">2.4 min</div><div class="vwf-metric-label">Avg Time</div></div>
+              </div>
+              <div class="vwf-bar"><div class="vwf-bar-fill sms" id="vwf-sms-bar" style="width:78.4%"></div></div>
+            </div>
+
+            <!-- Gate 1 -->
+            <div class="vwf-gate">
+              <div class="vwf-gate-connector"><div class="vwf-gate-vline"></div>
+                <div class="vwf-gate-btn" onclick="openGateModal(1)" title="Edit Gate 1"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg></div>
+              <div class="vwf-gate-vline"></div></div>
+              <div class="vwf-gate-details">
+                <div class="vwf-gate-name">Gate 1 — Escalation</div>
+                <div class="vwf-gate-time" id="vwf-gate1-time">10 min</div>
+                <div class="vwf-gate-sub" id="vwf-gate1-sub">2 retries, then release to Email</div>
+              </div>
+              <div class="vwf-gate-flow" id="vwf-gate1-flow">21.6% flow &#8595;</div>
+            </div>
+
+            <!-- Tier 2: Email -->
+            <div class="vwf-tier email">
+              <div class="vwf-tier-top">
+                <div class="vwf-tier-icon email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                <div class="vwf-tier-meta"><div class="vwf-tier-label">Tier 2</div><div class="vwf-tier-name">Email</div></div>
+                <div class="vwf-active" id="vwf-email-status">Active</div>
+              </div>
+              <div class="vwf-metrics">
+                <div class="vwf-metric"><div class="vwf-metric-val email" id="vwf-email-pct">16.2%</div><div class="vwf-metric-label">Caught</div></div>
+                <div class="vwf-metric"><div class="vwf-metric-val email" id="vwf-email-count">2,081</div><div class="vwf-metric-label">Sent</div></div>
+                <div class="vwf-metric"><div class="vwf-metric-val email" id="vwf-email-time">48 min</div><div class="vwf-metric-label">Avg Time</div></div>
+              </div>
+              <div class="vwf-bar"><div class="vwf-bar-fill email" id="vwf-email-bar" style="width:16.2%"></div></div>
+            </div>
+
+            <!-- Gate 2 -->
+            <div class="vwf-gate">
+              <div class="vwf-gate-connector"><div class="vwf-gate-vline"></div>
+                <div class="vwf-gate-btn" onclick="openGateModal(2)" title="Edit Gate 2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg></div>
+              <div class="vwf-gate-vline"></div></div>
+              <div class="vwf-gate-details">
+                <div class="vwf-gate-name">Gate 2 — Escalation</div>
+                <div class="vwf-gate-time" id="vwf-gate2-time">8 hours</div>
+                <div class="vwf-gate-sub" id="vwf-gate2-sub">Soft bounce retry x2, then release to Print</div>
+              </div>
+              <div class="vwf-gate-flow" id="vwf-gate2-flow">5.4% flow &#8595;</div>
+            </div>
+
+            <!-- Tier 3: Print -->
+            <div class="vwf-tier print">
+              <div class="vwf-tier-top">
+                <div class="vwf-tier-icon print"><svg viewBox="0 0 24 24"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+                <div class="vwf-tier-meta"><div class="vwf-tier-label">Tier 3</div><div class="vwf-tier-name">Print / Mail</div></div>
+                <div class="vwf-active" id="vwf-print-status">Active</div>
+              </div>
+              <div class="vwf-metrics">
+                <div class="vwf-metric"><div class="vwf-metric-val print" id="vwf-print-pct">4.1%</div><div class="vwf-metric-label">Final</div></div>
+                <div class="vwf-metric"><div class="vwf-metric-val print" id="vwf-print-count">527</div><div class="vwf-metric-label">Queued</div></div>
+                <div class="vwf-metric"><div class="vwf-metric-val print" id="vwf-print-time">24 hrs</div><div class="vwf-metric-label">To Delivery</div></div>
+              </div>
+              <div class="vwf-bar"><div class="vwf-bar-fill print" id="vwf-print-bar" style="width:4.1%"></div></div>
+            </div>
+
+            <div class="vwf-footer"><div class="vwf-footer-stat"><strong id="vwf-undeliverable">1.3%</strong> undeliverable — no valid contact data</div></div>
           </div>
-          <div class="activity-feed" id="activity-feed"></div>
         </div>
 
-        <!-- Message Journey Preview -->
-        <div class="dash-card">
-          <div class="dash-card-header">
-            <h3>Message Journey</h3>
-            <span style="font-size:11px;color:#94a3b8">Based on current gate settings</span>
+        <!-- Right: Activity + Journey + Tracker stacked -->
+        <div>
+          <!-- Live Activity Feed -->
+          <div class="roi-card" style="margin-bottom:20px">
+            <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">Live Activity <div class="dash-live"><span class="live-dot"></span> Streaming</div></h3>
+            <div class="activity-feed" id="activity-feed"></div>
           </div>
-          <div class="timeline" style="padding:0">
-            <div class="tl-line"></div>
-            <div class="tl-step"><div class="tl-dot sms"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="tl-label">SMS Sent</div><div class="tl-time">T + 0</div></div>
-            <div class="tl-step"><div class="tl-dot wait"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="tl-label">Wait</div><div class="tl-time" id="tl-wait1">up to 10 min</div></div>
-            <div class="tl-step"><div class="tl-dot email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="tl-label">Email</div><div class="tl-time" id="tl-email-time">T + 10 min</div></div>
-            <div class="tl-step"><div class="tl-dot wait"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="tl-label">Monitor</div><div class="tl-time" id="tl-wait2">up to 8 hrs</div></div>
-            <div class="tl-step"><div class="tl-dot mail"><svg viewBox="0 0 24 24"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><div class="tl-label">Print</div><div class="tl-time" id="tl-print-time">T + 8h 10m</div></div>
-            <div class="tl-step"><div class="tl-dot done"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div><div class="tl-label">Done</div><div class="tl-time">Batch cutoff</div></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Quick File Tracker Preview -->
-      <div class="dash-card" style="margin-bottom:24px">
-        <div class="dash-card-header">
-          <h3>Active Messages</h3>
-          <button class="btn" onclick="document.querySelector('[data-page=tracker]').click()" style="font-size:11px;padding:5px 12px">View All</button>
+          <!-- Message Journey -->
+          <div class="roi-card" style="margin-bottom:20px">
+            <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">Message Journey <span style="font-size:11px;color:#94a3b8;font-weight:400">Current gate settings</span></h3>
+            <div class="timeline" style="padding:0">
+              <div class="tl-line"></div>
+              <div class="tl-step"><div class="tl-dot sms"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="tl-label">SMS Sent</div><div class="tl-time">T + 0</div></div>
+              <div class="tl-step"><div class="tl-dot wait"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="tl-label">Wait</div><div class="tl-time" id="tl-wait1">up to 10 min</div></div>
+              <div class="tl-step"><div class="tl-dot email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="tl-label">Email</div><div class="tl-time" id="tl-email-time">T + 10 min</div></div>
+              <div class="tl-step"><div class="tl-dot wait"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="tl-label">Monitor</div><div class="tl-time" id="tl-wait2">up to 8 hrs</div></div>
+              <div class="tl-step"><div class="tl-dot mail"><svg viewBox="0 0 24 24"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><div class="tl-label">Print</div><div class="tl-time" id="tl-print-time">T + 8h 10m</div></div>
+              <div class="tl-step"><div class="tl-dot done"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div><div class="tl-label">Done</div><div class="tl-time">Batch cutoff</div></div>
+            </div>
+          </div>
+
+          <!-- Active Messages -->
+          <div class="roi-card">
+            <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">Active Messages <button class="btn" onclick="document.querySelector('[data-page=tracker]').click()" style="font-size:11px;padding:5px 12px">View All</button></h3>
+            <div class="dash-mini-tracker" id="mini-tracker"></div>
+          </div>
         </div>
-        <div class="dash-mini-tracker" id="mini-tracker"></div>
       </div>
     </div>
 
@@ -1054,89 +1004,6 @@
       </div>
     </div>
 
-    <!-- ═══════════ WATERFALL PAGE ═══════════ -->
-    <div class="page" id="page-waterfall">
-      <div class="section">
-        <div class="section-header"><h3>Waterfall Builder</h3>
-          <div class="tab-bar" id="wf-builder-tabs"><button class="active">Visual</button><button>Simulate</button><button>History</button></div>
-        </div>
-        <div class="vwf">
-          <!-- Tier 1: SMS -->
-          <div class="vwf-tier sms">
-            <div class="vwf-tier-top">
-              <div class="vwf-tier-icon sms"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-              <div class="vwf-tier-meta"><div class="vwf-tier-label">Tier 1</div><div class="vwf-tier-name">SMS</div></div>
-              <div class="vwf-active" id="vwf-sms-status">Active</div>
-            </div>
-            <div class="vwf-metrics">
-              <div class="vwf-metric"><div class="vwf-metric-val sms" id="vwf-sms-pct">78.4%</div><div class="vwf-metric-label">Resolved</div></div>
-              <div class="vwf-metric"><div class="vwf-metric-val sms" id="vwf-sms-count">10,073</div><div class="vwf-metric-label">Delivered</div></div>
-              <div class="vwf-metric"><div class="vwf-metric-val sms" id="vwf-sms-time">2.4 min</div><div class="vwf-metric-label">Avg Time</div></div>
-            </div>
-            <div class="vwf-bar"><div class="vwf-bar-fill sms" id="vwf-sms-bar" style="width:78.4%"></div></div>
-          </div>
-
-          <!-- Gate 1 -->
-          <div class="vwf-gate">
-            <div class="vwf-gate-connector"><div class="vwf-gate-vline"></div>
-              <div class="vwf-gate-btn" onclick="openGateModal(1)" title="Edit Gate 1"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg></div>
-            <div class="vwf-gate-vline"></div></div>
-            <div class="vwf-gate-details">
-              <div class="vwf-gate-name">Gate 1 — Escalation</div>
-              <div class="vwf-gate-time" id="vwf-gate1-time">10 min</div>
-              <div class="vwf-gate-sub" id="vwf-gate1-sub">2 retries, then release to Email</div>
-            </div>
-            <div class="vwf-gate-flow" id="vwf-gate1-flow">21.6% flow &#8595;</div>
-          </div>
-
-          <!-- Tier 2: Email -->
-          <div class="vwf-tier email">
-            <div class="vwf-tier-top">
-              <div class="vwf-tier-icon email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-              <div class="vwf-tier-meta"><div class="vwf-tier-label">Tier 2</div><div class="vwf-tier-name">Email</div></div>
-              <div class="vwf-active" id="vwf-email-status">Active</div>
-            </div>
-            <div class="vwf-metrics">
-              <div class="vwf-metric"><div class="vwf-metric-val email" id="vwf-email-pct">16.2%</div><div class="vwf-metric-label">Caught</div></div>
-              <div class="vwf-metric"><div class="vwf-metric-val email" id="vwf-email-count">2,081</div><div class="vwf-metric-label">Sent</div></div>
-              <div class="vwf-metric"><div class="vwf-metric-val email" id="vwf-email-time">48 min</div><div class="vwf-metric-label">Avg Time</div></div>
-            </div>
-            <div class="vwf-bar"><div class="vwf-bar-fill email" id="vwf-email-bar" style="width:16.2%"></div></div>
-          </div>
-
-          <!-- Gate 2 -->
-          <div class="vwf-gate">
-            <div class="vwf-gate-connector"><div class="vwf-gate-vline"></div>
-              <div class="vwf-gate-btn" onclick="openGateModal(2)" title="Edit Gate 2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg></div>
-            <div class="vwf-gate-vline"></div></div>
-            <div class="vwf-gate-details">
-              <div class="vwf-gate-name">Gate 2 — Escalation</div>
-              <div class="vwf-gate-time" id="vwf-gate2-time">8 hours</div>
-              <div class="vwf-gate-sub" id="vwf-gate2-sub">Soft bounce retry x2, then release to Print</div>
-            </div>
-            <div class="vwf-gate-flow" id="vwf-gate2-flow">5.4% flow &#8595;</div>
-          </div>
-
-          <!-- Tier 3: Print -->
-          <div class="vwf-tier print">
-            <div class="vwf-tier-top">
-              <div class="vwf-tier-icon print"><svg viewBox="0 0 24 24"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
-              <div class="vwf-tier-meta"><div class="vwf-tier-label">Tier 3</div><div class="vwf-tier-name">Print / Mail</div></div>
-              <div class="vwf-active" id="vwf-print-status">Active</div>
-            </div>
-            <div class="vwf-metrics">
-              <div class="vwf-metric"><div class="vwf-metric-val print" id="vwf-print-pct">4.1%</div><div class="vwf-metric-label">Final</div></div>
-              <div class="vwf-metric"><div class="vwf-metric-val print" id="vwf-print-count">527</div><div class="vwf-metric-label">Queued</div></div>
-              <div class="vwf-metric"><div class="vwf-metric-val print" id="vwf-print-time">24 hrs</div><div class="vwf-metric-label">To Delivery</div></div>
-            </div>
-            <div class="vwf-bar"><div class="vwf-bar-fill print" id="vwf-print-bar" style="width:4.1%"></div></div>
-          </div>
-
-          <div class="vwf-footer"><div class="vwf-footer-stat"><strong id="vwf-undeliverable">1.3%</strong> undeliverable — no valid contact data</div></div>
-        </div>
-      </div>
-      <div class="section" id="builder-settings"></div>
-    </div>
 
     <!-- ═══════════ SETTINGS PAGE ═══════════ -->
     <div class="page" id="page-settings">
@@ -2131,16 +1998,7 @@ function switchClient(name) {
   document.getElementById('stat-print-sub').textContent = s.printSub;
   throughputBase = s.throughput;
 
-  // Channel bars
-  const sf = document.getElementById('sms-fill'), ef = document.getElementById('email-fill'), pf = document.getElementById('print-fill');
-  if (sf) sf.style.width = s.sms; if (ef) ef.style.width = s.email; if (pf) pf.style.width = s.print;
-
-  // Dashboard inline waterfall
-  document.getElementById('wf-sms-pct').textContent = s.sms;
-  document.getElementById('wf-email-pct').textContent = s.email;
-  document.getElementById('wf-print-pct').textContent = s.print;
-
-  // Vertical waterfall builder
+  // Waterfall builder
   const vw = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   const wf = d.waterfall;
   vw('vwf-sms-pct', wf.smsPct); vw('vwf-sms-count', wf.smsCount); vw('vwf-sms-time', wf.smsTime);
@@ -2165,7 +2023,7 @@ function switchClient(name) {
   renderAudit(); renderActivityFeed(); renderMiniTracker();
 
   // Destroy charts and reset flags so they reinit on page visit
-  document.querySelectorAll('canvas:not(#waterfall-canvas)').forEach(c => {
+  document.querySelectorAll('canvas').forEach(c => {
     const chart = Chart.getChart(c);
     if (chart) chart.destroy();
   });
@@ -2175,7 +2033,6 @@ function switchClient(name) {
   if (document.getElementById('page-payments')?.classList.contains('active')) { setTimeout(initPayCharts, 50); }
 
   // Animate hero number
-  animateCountUp();
 }
 
 // ─── Toggle Switches ───
@@ -2251,19 +2108,14 @@ function saveGateModal() {
 }
 
 function updateGateDisplays() {
-  document.getElementById('gate1-display').textContent = state.gate1.delay + ' ' + state.gate1.unit;
-  document.getElementById('gate1-sub').textContent = state.gate1.retries + ' retries, then release';
-  document.getElementById('gate2-display').textContent = state.gate2.delay + ' ' + state.gate2.unit;
-  document.getElementById('gate2-sub').textContent = 'Soft bounce retry x' + state.gate2.retries;
-  // Vertical waterfall builder
   const vg1 = document.getElementById('vwf-gate1-time');
-  if (vg1) { vg1.textContent = state.gate1.delay + ' ' + state.gate1.unit; }
+  if (vg1) vg1.textContent = state.gate1.delay + ' ' + state.gate1.unit;
   const vg1s = document.getElementById('vwf-gate1-sub');
-  if (vg1s) { vg1s.textContent = state.gate1.retries + ' retries, then release to Email'; }
+  if (vg1s) vg1s.textContent = state.gate1.retries + ' retries, then release to Email';
   const vg2 = document.getElementById('vwf-gate2-time');
-  if (vg2) { vg2.textContent = state.gate2.delay + ' ' + state.gate2.unit; }
+  if (vg2) vg2.textContent = state.gate2.delay + ' ' + state.gate2.unit;
   const vg2s = document.getElementById('vwf-gate2-sub');
-  if (vg2s) { vg2s.textContent = 'Soft bounce retry x' + state.gate2.retries + ', then release to Print'; }
+  if (vg2s) vg2s.textContent = 'Soft bounce retry x' + state.gate2.retries + ', then release to Print';
   // Settings page inputs
   const sd = document.querySelector('[data-field="sms-delay"]'); if(sd) sd.value = state.gate1.delay;
   const sr = document.querySelector('[data-field="sms-retries"]'); if(sr) sr.value = state.gate1.retries;
@@ -2934,26 +2786,6 @@ function renderMiniTracker() {
   });
 }
 
-// ─── Count-Up Animation ───
-function animateCountUp() {
-  const el = document.getElementById('stat-total');
-  if (!el) return;
-  const target = el.textContent.replace(/,/g, '');
-  const num = parseInt(target) || 0;
-  if (num === 0) return;
-  const duration = 1500;
-  const start = performance.now();
-  el.textContent = '0';
-  function tick(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-    const current = Math.round(num * eased);
-    el.textContent = current.toLocaleString();
-    if (progress < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
 
 // ─── Throughput counter simulation ───
 let throughputBase = 847;
@@ -2967,103 +2799,6 @@ function updateThroughput() {
 }
 setInterval(updateThroughput, 3000);
 
-// ─── Waterfall Particle Animation ───
-(function() {
-  const canvas = document.getElementById('waterfall-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const particles = [];
-  const maxParticles = 60;
-  let animFrame;
-
-  function resize() {
-    const card = canvas.parentElement;
-    canvas.width = card.offsetWidth;
-    canvas.height = card.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-    reset() {
-      this.x = -4;
-      this.y = canvas.height * (0.35 + Math.random() * 0.3);
-      this.speed = 0.6 + Math.random() * 0.8;
-      this.opacity = 0.5 + Math.random() * 0.4;
-      this.size = 2 + Math.random() * 2;
-      this.wobble = Math.random() * Math.PI * 2;
-      this.wobbleSpeed = 0.02 + Math.random() * 0.02;
-      this.resolved = false;
-      this.fadeOut = false;
-      this.tier = 0;
-      this.resolveColor = '#06b6d4';
-    }
-    update() {
-      if (this.fadeOut) {
-        this.opacity -= 0.02;
-        this.size += 0.05;
-        if (this.opacity <= 0) { this.reset(); return; }
-      }
-      this.x += this.speed;
-      this.wobble += this.wobbleSpeed;
-      this.y += Math.sin(this.wobble) * 0.3;
-
-      const w = canvas.width;
-      const gate1X = w * 0.33;
-      const gate2X = w * 0.66;
-
-      if (!this.fadeOut && this.tier === 0 && this.x > gate1X) {
-        this.tier = 1;
-        if (Math.random() < 0.78) { this.fadeOut = true; this.resolveColor = '#06b6d4'; }
-      }
-      if (!this.fadeOut && this.tier === 1 && this.x > gate2X) {
-        this.tier = 2;
-        if (Math.random() < 0.75) { this.fadeOut = true; this.resolveColor = '#7c3aed'; }
-        else { this.resolveColor = '#d97706'; }
-      }
-      if (!this.fadeOut && this.x > w + 4) {
-        this.fadeOut = true;
-        this.resolveColor = '#d97706';
-      }
-    }
-    draw() {
-      const color = this.tier === 0 ? '6,182,212' : this.tier === 1 ? '124,58,237' : '217,119,6';
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${color},${this.opacity})`;
-      ctx.fill();
-      if (this.fadeOut) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${color},${this.opacity * 0.2})`;
-        ctx.fill();
-      }
-    }
-  }
-
-  let spawnTimer = 0;
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    spawnTimer++;
-    if (spawnTimer > 6 && particles.length < maxParticles) {
-      particles.push(new Particle());
-      spawnTimer = 0;
-    }
-    for (const p of particles) { p.update(); p.draw(); }
-    animFrame = requestAnimationFrame(animate);
-  }
-  animate();
-
-  // Pause when not visible
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) { if (!animFrame) animate(); }
-    else { cancelAnimationFrame(animFrame); animFrame = null; }
-  });
-  observer.observe(canvas);
-})();
 
 // ─── ROI Calculator ───
 const roiPresets = {
@@ -3184,7 +2919,6 @@ renderPlans();
 renderStatements();
 renderActivityFeed();
 renderMiniTracker();
-setTimeout(animateCountUp, 300);
 roiCalc();
 </script>
 </body>
