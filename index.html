@@ -447,6 +447,59 @@
   .stmt-delivery.print{background:#fffbeb;color:#d97706}
   .stmt-delivery.portal{background:#ecfdf5;color:#059669}
 
+  /* ─── Integration ─── */
+  .integ-hero{background:linear-gradient(145deg,#080e1a,#0f1a30);border-radius:20px;padding:36px 40px;margin-bottom:24px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.15);display:flex;align-items:center;gap:32px}
+  .integ-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(6,182,212,.1),transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(16,185,129,.08),transparent 60%);pointer-events:none}
+  .integ-hero>*{position:relative;z-index:1}
+  .integ-logo{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;flex-shrink:0}
+  .integ-logo.matrix{background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff;box-shadow:0 0 24px rgba(6,182,212,.3)}
+  .integ-logo.paymentus{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 0 24px rgba(16,185,129,.3)}
+  .integ-connector{display:flex;align-items:center;gap:0;flex-shrink:0}
+  .integ-line{width:40px;height:2px;background:linear-gradient(90deg,#06b6d4,#10b981);position:relative}
+  .integ-line::after{content:'';position:absolute;inset:0;background:inherit;animation:integ-flow 1.5s linear infinite;opacity:.5}
+  @keyframes integ-flow{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}}
+  .integ-arrows{font-size:16px;color:#22d3ee;animation:integ-pulse 2s ease-in-out infinite}
+  @keyframes integ-pulse{0%,100%{opacity:.4}50%{opacity:1}}
+  .integ-info{flex:1}
+  .integ-info h3{font-size:18px;font-weight:700;color:#e2e8f0;margin-bottom:4px}
+  .integ-info p{font-size:13px;color:#64748b;line-height:1.5}
+  .integ-status{flex-shrink:0;display:flex;align-items:center;gap:8px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:600;color:#34d399}
+  .integ-status .live-dot{width:8px;height:8px}
+
+  .integ-flow-diagram{background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:24px}
+  .integ-flow-title{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:4px}
+  .integ-flow-desc{font-size:12px;color:#94a3b8;margin-bottom:28px}
+  .integ-flow-steps{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
+  .integ-step{display:flex;flex-direction:column;align-items:center;width:130px;text-align:center}
+  .integ-step-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-size:22px;transition:transform .2s}
+  .integ-step-icon:hover{transform:scale(1.1)}
+  .integ-step-icon.wf{background:#ecfeff;color:#0891b2}
+  .integ-step-icon.pay{background:#ecfdf5;color:#059669}
+  .integ-step-icon.sync{background:#f5f3ff;color:#7c3aed}
+  .integ-step-icon.confirm{background:#fef3c7;color:#d97706}
+  .integ-step-label{font-size:11px;font-weight:600;color:#0f172a}
+  .integ-step-sub{font-size:10px;color:#94a3b8}
+  .integ-arrow{font-size:18px;color:#cbd5e1;margin:0 2px}
+
+  .integ-features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+  .integ-feature{background:#fff;border-radius:14px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.05);transition:all .2s}
+  .integ-feature:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateY(-1px)}
+  .integ-feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+  .integ-feature h4{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:4px}
+  .integ-feature p{font-size:12px;color:#64748b;line-height:1.5}
+
+  .integ-products{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .integ-product{background:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;align-items:center;gap:16px;transition:all .2s}
+  .integ-product:hover{box-shadow:0 4px 12px rgba(0,0,0,.07)}
+  .integ-product-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .integ-product-icon.ipp{background:#ecfeff;color:#0891b2}
+  .integ-product-icon.ipn{background:#ecfdf5;color:#059669}
+  .integ-product-icon.bw{background:#f5f3ff;color:#7c3aed}
+  .integ-product-icon.ss{background:#fef3c7;color:#d97706}
+  .integ-product h4{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:2px}
+  .integ-product p{font-size:11px;color:#64748b}
+  .integ-product .integ-badge{margin-left:auto;flex-shrink:0;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:#ecfdf5;color:#059669}
+
   /* ─── Toast ─── */
   .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:14px 22px;border-radius:12px;font-size:13px;font-weight:500;box-shadow:0 12px 32px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.21,1.02,.73,1);z-index:100;display:flex;align-items:center;gap:10px}
   .toast.show{transform:translateY(0);opacity:1}
@@ -1009,6 +1062,7 @@
         <button data-psub="ttp">Text-to-Pay</button>
         <button data-psub="plans">Payment Plans</button>
         <button data-psub="statements">Statements</button>
+        <button data-psub="paymentus">Paymentus Integration</button>
       </div>
       <div id="pay-sub-payments">
       <div class="pay-kpi-row">
@@ -1296,6 +1350,147 @@
         </div>
       </div>
       </div><!-- end pay-sub-statements -->
+
+      <div id="pay-sub-paymentus" style="display:none">
+        <!-- Hero: Partnership Banner -->
+        <div class="integ-hero">
+          <div class="integ-logo matrix">M</div>
+          <div class="integ-connector">
+            <div class="integ-line"></div>
+            <div class="integ-arrows">&#8644;</div>
+            <div class="integ-line"></div>
+          </div>
+          <div class="integ-logo paymentus">P</div>
+          <div class="integ-info">
+            <h3>Matrix + Paymentus</h3>
+            <p>Digital Waterfall orchestrates patient communications upstream. Paymentus processes payments downstream. Together: an Intelligent Billing Engagement Platform.</p>
+          </div>
+          <div class="integ-status"><span class="live-dot"></span> Connected</div>
+        </div>
+
+        <!-- Integration Flow Diagram -->
+        <div class="integ-flow-diagram">
+          <div class="integ-flow-title">End-to-End Payment Flow</div>
+          <div class="integ-flow-desc">How a patient statement moves from generation through payment confirmation</div>
+          <div class="integ-flow-steps">
+            <div class="integ-step">
+              <div class="integ-step-icon wf">&#128203;</div>
+              <div class="integ-step-label">Statement Generated</div>
+              <div class="integ-step-sub">Matrix Waterfall</div>
+            </div>
+            <div class="integ-arrow">&#8594;</div>
+            <div class="integ-step">
+              <div class="integ-step-icon wf">&#128241;</div>
+              <div class="integ-step-label">SMS / Email Sent</div>
+              <div class="integ-step-sub">Waterfall Tier 1-2</div>
+            </div>
+            <div class="integ-arrow">&#8594;</div>
+            <div class="integ-step">
+              <div class="integ-step-icon pay">&#128279;</div>
+              <div class="integ-step-label">Pay Link Clicked</div>
+              <div class="integ-step-sub">Paymentus Portal</div>
+            </div>
+            <div class="integ-arrow">&#8594;</div>
+            <div class="integ-step">
+              <div class="integ-step-icon pay">&#128179;</div>
+              <div class="integ-step-label">Payment Processed</div>
+              <div class="integ-step-sub">Paymentus IPP</div>
+            </div>
+            <div class="integ-arrow">&#8594;</div>
+            <div class="integ-step">
+              <div class="integ-step-icon sync">&#128260;</div>
+              <div class="integ-step-label">Webhook Received</div>
+              <div class="integ-step-sub">Real-Time Sync</div>
+            </div>
+            <div class="integ-arrow">&#8594;</div>
+            <div class="integ-step">
+              <div class="integ-step-icon confirm">&#10003;</div>
+              <div class="integ-step-label">Waterfall Stopped</div>
+              <div class="integ-step-sub">Cascade Halted</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integration Features -->
+        <div class="section">
+          <div class="section-header"><h3>Integration Capabilities</h3></div>
+          <div class="integ-features">
+            <div class="integ-feature">
+              <div class="integ-feature-icon" style="background:#ecfeff;color:#0891b2">&#128279;</div>
+              <h4>Pay Link Embedding</h4>
+              <p>Unique Paymentus payment URLs automatically embedded in every SMS and email. Patients tap once to pay — no portal login, no app download.</p>
+            </div>
+            <div class="integ-feature">
+              <div class="integ-feature-icon" style="background:#ecfdf5;color:#059669">&#9889;</div>
+              <h4>Real-Time Payment Webhooks</h4>
+              <p>When Paymentus confirms payment, a webhook instantly stops the waterfall cascade. No duplicate messages, no print for already-paid balances.</p>
+            </div>
+            <div class="integ-feature">
+              <div class="integ-feature-icon" style="background:#f5f3ff;color:#7c3aed">&#128200;</div>
+              <h4>Aging Data Sync</h4>
+              <p>Outstanding balance aging from Paymentus drives priority tiers in the waterfall. Past-due 90+ days = Critical priority = fastest escalation path.</p>
+            </div>
+            <div class="integ-feature">
+              <div class="integ-feature-icon" style="background:#fef3c7;color:#d97706">&#128176;</div>
+              <h4>BillWallet Integration</h4>
+              <p>Patients who use Paymentus BillWallet get auto-enrolled for digital-first delivery. Stored payment methods enable one-tap payment from SMS.</p>
+            </div>
+            <div class="integ-feature">
+              <div class="integ-feature-icon" style="background:#fef2f2;color:#dc2626">&#128274;</div>
+              <h4>Shared Compliance Layer</h4>
+              <p>Both platforms are SOC 2 Type II, HIPAA, and PCI DSS Level 1 compliant. Shared audit trail for every communication and payment event.</p>
+            </div>
+            <div class="integ-feature">
+              <div class="integ-feature-icon" style="background:#f0f4f8;color:#334155">&#128736;</div>
+              <h4>EHR Bridge</h4>
+              <p>Paymentus connects to Epic MyChart and Oracle Health. Waterfall messages can deep-link patients directly into their MyChart payment view.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paymentus Product Suite -->
+        <div class="section">
+          <div class="section-header"><h3>Paymentus Product Integration Points</h3></div>
+          <div class="integ-products">
+            <div class="integ-product">
+              <div class="integ-product-icon ipp">&#9881;</div>
+              <div><h4>Intelligent Payment Platform (IPP)</h4><p>Core payment processing — card, ACH, digital wallets, Apple/Google Pay</p></div>
+              <span class="integ-badge">Active</span>
+            </div>
+            <div class="integ-product">
+              <div class="integ-product-icon ipn">&#127760;</div>
+              <div><h4>Instant Payment Network (IPN)</h4><p>Real-time payment network connecting 2,200+ billers across the U.S.</p></div>
+              <span class="integ-badge">Active</span>
+            </div>
+            <div class="integ-product">
+              <div class="integ-product-icon bw">&#128091;</div>
+              <div><h4>BillWallet</h4><p>AI-powered digital wallet — 4X faster payments, one-tap from SMS</p></div>
+              <span class="integ-badge">Active</span>
+            </div>
+            <div class="integ-product">
+              <div class="integ-product-icon ss">&#128274;</div>
+              <div><h4>Secure Service</h4><p>Agent-assisted payment for call center fallback when digital channels fail</p></div>
+              <span class="integ-badge" style="background:#fffbeb;color:#d97706">Planned</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Value Metrics -->
+        <div class="section">
+          <div class="section-header"><h3>Integration Impact</h3></div>
+          <div class="pay-kpi-row">
+            <div class="pay-kpi"><div class="pay-kpi-label">Pay Link Click Rate</div><div class="pay-kpi-value green">34.2%</div><div class="pay-kpi-delta up">vs 12% industry avg</div></div>
+            <div class="pay-kpi"><div class="pay-kpi-label">Avg Days to Pay</div><div class="pay-kpi-value teal">14.2</div><div class="pay-kpi-delta up">-8.3 days with waterfall</div></div>
+            <div class="pay-kpi"><div class="pay-kpi-label">Digital Payment Rate</div><div class="pay-kpi-value" style="color:#7c3aed">67.9%</div><div class="pay-kpi-delta up">+23% vs print-only</div></div>
+            <div class="pay-kpi"><div class="pay-kpi-label">Print Cost Savings</div><div class="pay-kpi-value green">$6,240</div><div class="pay-kpi-delta up">/month per client</div></div>
+          </div>
+          <div class="savings-highlight">
+            <div><div class="savings-val">$6,240</div></div>
+            <div class="savings-text"><strong>Monthly savings per client</strong> by routing through Paymentus digital channels first. Every 1% shift from print to SMS/email saves ~$890/month. Combined with Paymentus's 4X faster payment via BillWallet, clients see 23% higher digital payment rates and 8+ day reduction in days to pay.</div>
+          </div>
+        </div>
+      </div><!-- end pay-sub-paymentus -->
+
     </div>
 
     <!-- ═══════════ AUDIT PAGE ═══════════ -->
@@ -2096,7 +2291,7 @@ document.querySelectorAll('#pay-subtabs button').forEach(btn => {
     document.querySelectorAll('#pay-subtabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const sub = btn.dataset.psub;
-    ['payments','ttp','plans','statements'].forEach(s => {
+    ['payments','ttp','plans','statements','paymentus'].forEach(s => {
       const el = document.getElementById('pay-sub-' + s);
       if (el) el.style.display = s === sub ? '' : 'none';
     });
