@@ -261,6 +261,67 @@
   .savings-highlight .savings-text{font-size:13px;color:#064e3b}
   .savings-highlight .savings-text strong{font-weight:600}
 
+  /* ─── Payments ─── */
+  .pay-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .pay-kpi{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:22px 24px;transition:box-shadow .2s}
+  .pay-kpi:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .pay-kpi .pay-kpi-label{font-size:11px;color:#94a3b8;font-weight:500;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+  .pay-kpi .pay-kpi-value{font-size:26px;font-weight:700;color:#0f172a;line-height:1}
+  .pay-kpi .pay-kpi-value.green{color:#10b981}
+  .pay-kpi .pay-kpi-value.teal{color:#0891b2}
+  .pay-kpi .pay-kpi-value.amber{color:#f59e0b}
+  .pay-kpi .pay-kpi-value.red{color:#ef4444}
+  .pay-kpi .pay-kpi-delta{font-size:11px;margin-top:5px;font-weight:500}
+  .pay-kpi .pay-kpi-delta.up{color:#10b981}
+  .pay-kpi .pay-kpi-delta.down{color:#ef4444}
+
+  .ttp-flow{display:flex;align-items:center;gap:0;padding:24px 16px;flex-wrap:wrap;justify-content:center}
+  .ttp-step{display:flex;flex-direction:column;align-items:center;width:150px;text-align:center}
+  .ttp-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:22px}
+  .ttp-icon.intake{background:#ecfeff;color:#0891b2}
+  .ttp-icon.sms{background:#d1fae5;color:#059669}
+  .ttp-icon.link{background:#f5f3ff;color:#7c3aed}
+  .ttp-icon.portal{background:#fef3c7;color:#d97706}
+  .ttp-icon.confirm{background:#ecfdf5;color:#10b981}
+  .ttp-step-label{font-size:12px;font-weight:600;color:#0f172a;margin-bottom:2px}
+  .ttp-step-desc{font-size:10px;color:#94a3b8}
+  .ttp-arrow{font-size:18px;color:#cbd5e1;margin:0 4px}
+
+  .plan-table{width:100%;border-collapse:collapse}
+  .plan-table th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;text-align:left;padding:10px 14px;border-bottom:1px solid #e8ecf1}
+  .plan-table td{font-size:13px;padding:14px;color:#475569;border-bottom:1px solid #f1f5f9}
+  .plan-table tbody tr:hover td{background:#f8fafc}
+  .plan-status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+  .plan-status.active{background:#ecfdf5;color:#059669}
+  .plan-status.past-due{background:#fef2f2;color:#dc2626}
+  .plan-status.completed{background:#f1f5f9;color:#64748b}
+  .plan-progress{width:100px;height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:6px}
+  .plan-progress-fill{height:100%;border-radius:3px;background:#10b981}
+
+  .stmt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+  .stmt-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px;text-align:center;transition:box-shadow .2s}
+  .stmt-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .stmt-card .stmt-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px}
+  .stmt-card .stmt-icon.digital{background:#ecfeff;color:#0891b2}
+  .stmt-card .stmt-icon.printed{background:#fef3c7;color:#d97706}
+  .stmt-card .stmt-icon.portal{background:#f5f3ff;color:#7c3aed}
+  .stmt-card h4{font-size:14px;font-weight:600;color:#0f172a;margin-bottom:4px}
+  .stmt-card p{font-size:12px;color:#94a3b8}
+  .stmt-card .stmt-val{font-size:28px;font-weight:700;margin:8px 0 4px}
+  .stmt-card .stmt-val.teal{color:#0891b2}
+  .stmt-card .stmt-val.amber{color:#d97706}
+  .stmt-card .stmt-val.purple{color:#7c3aed}
+
+  .stmt-table{width:100%;border-collapse:collapse}
+  .stmt-table th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;text-align:left;padding:10px 14px;border-bottom:1px solid #e8ecf1}
+  .stmt-table td{font-size:13px;padding:12px 14px;color:#475569;border-bottom:1px solid #f1f5f9}
+  .stmt-table tbody tr:hover td{background:#f8fafc}
+  .stmt-delivery{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500}
+  .stmt-delivery.sms{background:#ecfeff;color:#0891b2}
+  .stmt-delivery.email{background:#f5f3ff;color:#7c3aed}
+  .stmt-delivery.print{background:#fffbeb;color:#d97706}
+  .stmt-delivery.portal{background:#ecfdf5;color:#059669}
+
   /* ─── Toast ─── */
   .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.15);transform:translateY(80px);opacity:0;transition:all .3s;z-index:100;display:flex;align-items:center;gap:8px}
   .toast.show{transform:translateY(0);opacity:1}
@@ -372,6 +433,25 @@
       <button class="nav-link" data-page="costs">
         <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         Cost Analysis
+      </button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Payments</div>
+      <button class="nav-link" data-page="payments">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Payment Dashboard
+      </button>
+      <button class="nav-link" data-page="ttp">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Text-to-Pay
+      </button>
+      <button class="nav-link" data-page="plans">
+        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Payment Plans
+      </button>
+      <button class="nav-link" data-page="statements">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Statements
       </button>
     </div>
     <div class="nav-group">
@@ -755,6 +835,297 @@
               <div class="savings-text"><strong>Estimated monthly savings</strong> by increasing SMS resolution from 78% to 85%. Every 1% shift from print to SMS saves ~$890/month.</div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAYMENT DASHBOARD ═══════════ -->
+    <div class="page" id="page-payments">
+      <div class="pay-kpi-row">
+        <div class="pay-kpi"><div class="pay-kpi-label">Collected This Month</div><div class="pay-kpi-value green" id="pay-collected">$1,247,830</div><div class="pay-kpi-delta up">+12.4% vs last month</div></div>
+        <div class="pay-kpi"><div class="pay-kpi-label">Outstanding Balance</div><div class="pay-kpi-value amber" id="pay-outstanding">$892,415</div><div class="pay-kpi-delta down">-6.1% vs last month</div></div>
+        <div class="pay-kpi"><div class="pay-kpi-label">Payment Rate</div><div class="pay-kpi-value teal" id="pay-rate">58.3%</div><div class="pay-kpi-delta up">+3.2% vs last month</div></div>
+        <div class="pay-kpi"><div class="pay-kpi-label">Avg Days to Pay</div><div class="pay-kpi-value" id="pay-days" style="color:#0f172a">14.2</div><div class="pay-kpi-delta up">-2.1 days improved</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Payment Analytics</h3>
+          <div class="tab-bar" id="pay-range-tabs">
+            <button class="active" data-prange="7d">7 Days</button>
+            <button data-prange="30d">30 Days</button>
+            <button data-prange="90d">90 Days</button>
+            <button data-prange="ytd">YTD</button>
+          </div>
+        </div>
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>Collection Trend</h4>
+            <div class="chart-desc">Daily payments collected vs outstanding over time</div>
+            <div class="chart-wrap"><canvas id="chart-collection-trend"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Payment Method Breakdown</h4>
+            <div class="chart-desc">How patients are paying across channels</div>
+            <div class="chart-wrap"><canvas id="chart-pay-method"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Aging Buckets</h4>
+            <div class="chart-desc">Outstanding balance distribution by age</div>
+            <div class="chart-wrap"><canvas id="chart-aging"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Payment by Channel</h4>
+            <div class="chart-desc">Payments driven by each communication channel</div>
+            <div class="chart-wrap"><canvas id="chart-pay-channel"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Recent Payments</h3>
+          <button class="btn" onclick="showToast('Payment report exported')">Export</button>
+        </div>
+        <div class="tracker-card">
+          <table class="file-table" id="payment-table">
+            <thead><tr><th>Transaction ID</th><th>Patient</th><th>Amount</th><th>Method</th><th>Channel</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody id="pay-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ TEXT-TO-PAY ═══════════ -->
+    <div class="page" id="page-ttp">
+      <div class="section">
+        <div class="section-header"><h3>Text-to-Pay Flow</h3>
+          <div class="toggle on" data-toggle="ttp-enabled" onclick="toggleSwitch(this)"><div class="knob"></div></div>
+        </div>
+        <div class="waterfall-card">
+          <div class="card-desc" style="margin-bottom:20px">Payment links are automatically embedded in waterfall SMS and email messages. Patients tap to pay instantly — no app download, no portal login.</div>
+          <div class="ttp-flow">
+            <div class="ttp-step">
+              <div class="ttp-icon intake">&#128203;</div>
+              <div class="ttp-step-label">Statement Generated</div>
+              <div class="ttp-step-desc">Balance file imported</div>
+            </div>
+            <div class="ttp-arrow">&#8594;</div>
+            <div class="ttp-step">
+              <div class="ttp-icon sms">&#128241;</div>
+              <div class="ttp-step-label">SMS with Pay Link</div>
+              <div class="ttp-step-desc">Unique secure URL</div>
+            </div>
+            <div class="ttp-arrow">&#8594;</div>
+            <div class="ttp-step">
+              <div class="ttp-icon link">&#128279;</div>
+              <div class="ttp-step-label">Patient Taps Link</div>
+              <div class="ttp-step-desc">Mobile-optimized page</div>
+            </div>
+            <div class="ttp-arrow">&#8594;</div>
+            <div class="ttp-step">
+              <div class="ttp-icon portal">&#128179;</div>
+              <div class="ttp-step-label">Enters Payment</div>
+              <div class="ttp-step-desc">Card, ACH, Apple/Google Pay</div>
+            </div>
+            <div class="ttp-arrow">&#8594;</div>
+            <div class="ttp-step">
+              <div class="ttp-icon confirm">&#10003;</div>
+              <div class="ttp-step-label">Confirmed</div>
+              <div class="ttp-step-desc">Receipt + waterfall stops</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Text-to-Pay Settings</h3></div>
+        <div class="config-grid">
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon sms"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3"/></svg></div>
+              <h4>SMS Pay Link</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Include Pay Link in SMS</span><div class="toggle on" data-toggle="ttp-sms" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Link Expiry</span><div><input class="config-input" value="72" data-field="ttp-link-expiry"><span class="config-unit">hours</span></div></div>
+            <div class="config-row"><span class="config-label">Min Balance for Link</span><div><input class="config-input" value="25" data-field="ttp-min-balance" style="width:72px"><span class="config-unit">$</span></div></div>
+          </div>
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <h4>Email Pay Button</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Include Pay Button in Email</span><div class="toggle on" data-toggle="ttp-email" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Button Text</span><div><input class="config-input" value="Pay Now" style="width:100px" data-field="ttp-btn-text"></div></div>
+            <div class="config-row"><span class="config-label">Show Balance in Email</span><div class="toggle on" data-toggle="ttp-show-bal" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon mail"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+              <h4>Payment Methods</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Credit / Debit Card</span><div class="toggle on" data-toggle="pm-card" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">ACH / Bank Transfer</span><div class="toggle on" data-toggle="pm-ach" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Apple Pay / Google Pay</span><div class="toggle on" data-toggle="pm-wallet" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Text-to-Pay Performance</h3></div>
+        <div class="pay-kpi-row">
+          <div class="pay-kpi"><div class="pay-kpi-label">Links Sent</div><div class="pay-kpi-value teal">8,432</div><div class="pay-kpi-delta up">This month</div></div>
+          <div class="pay-kpi"><div class="pay-kpi-label">Links Opened</div><div class="pay-kpi-value" style="color:#7c3aed">6,218</div><div class="pay-kpi-delta up">73.8% open rate</div></div>
+          <div class="pay-kpi"><div class="pay-kpi-label">Payments Made</div><div class="pay-kpi-value green">4,891</div><div class="pay-kpi-delta up">58.0% conversion</div></div>
+          <div class="pay-kpi"><div class="pay-kpi-label">Revenue via TTP</div><div class="pay-kpi-value green">$847,220</div><div class="pay-kpi-delta up">67.9% of total</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PAYMENT PLANS ═══════════ -->
+    <div class="page" id="page-plans">
+      <div class="section">
+        <div class="section-header"><h3>Payment Plans</h3>
+          <div class="topbar-actions">
+            <button class="btn" onclick="showToast('Plan report exported')">Export</button>
+            <button class="btn btn-primary" onclick="showToast('New plan wizard coming in Phase 4')">+ New Plan Template</button>
+          </div>
+        </div>
+        <div class="pay-kpi-row">
+          <div class="pay-kpi"><div class="pay-kpi-label">Active Plans</div><div class="pay-kpi-value teal">342</div><div class="pay-kpi-delta up">+18 this month</div></div>
+          <div class="pay-kpi"><div class="pay-kpi-label">Total Plan Value</div><div class="pay-kpi-value" style="color:#0f172a">$1,842,600</div><div class="pay-kpi-delta up">Across all plans</div></div>
+          <div class="pay-kpi"><div class="pay-kpi-label">On-Time Rate</div><div class="pay-kpi-value green">91.2%</div><div class="pay-kpi-delta up">+2.4% vs last month</div></div>
+          <div class="pay-kpi"><div class="pay-kpi-label">Past Due Plans</div><div class="pay-kpi-value red">28</div><div class="pay-kpi-delta down">8.2% of active</div></div>
+        </div>
+
+        <div class="tracker-card">
+          <div class="search-bar">
+            <input class="search-input" placeholder="Search plans by patient name or ID..." id="plan-search" oninput="filterPlans()">
+          </div>
+          <table class="plan-table">
+            <thead><tr><th>Plan ID</th><th>Patient</th><th>Total</th><th>Paid</th><th>Remaining</th><th>Progress</th><th>Next Due</th><th>Status</th></tr></thead>
+            <tbody id="plan-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Plan Templates</h3></div>
+        <div class="config-grid">
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon sms"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+              <h4>Standard Plan</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Min Balance</span><span style="font-size:13px;font-weight:500;color:#0f172a">$100</span></div>
+            <div class="config-row"><span class="config-label">Max Installments</span><span style="font-size:13px;font-weight:500;color:#0f172a">12</span></div>
+            <div class="config-row"><span class="config-label">Interest Rate</span><span style="font-size:13px;font-weight:500;color:#0f172a">0%</span></div>
+            <div class="config-row"><span class="config-label">Auto-Enroll SMS</span><div class="toggle on" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon email"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+              <h4>Extended Plan</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Min Balance</span><span style="font-size:13px;font-weight:500;color:#0f172a">$500</span></div>
+            <div class="config-row"><span class="config-label">Max Installments</span><span style="font-size:13px;font-weight:500;color:#0f172a">24</span></div>
+            <div class="config-row"><span class="config-label">Interest Rate</span><span style="font-size:13px;font-weight:500;color:#0f172a">0%</span></div>
+            <div class="config-row"><span class="config-label">Auto-Enroll SMS</span><div class="toggle on" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon mail"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+              <h4>Hardship Plan</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Min Balance</span><span style="font-size:13px;font-weight:500;color:#0f172a">$50</span></div>
+            <div class="config-row"><span class="config-label">Max Installments</span><span style="font-size:13px;font-weight:500;color:#0f172a">36</span></div>
+            <div class="config-row"><span class="config-label">Interest Rate</span><span style="font-size:13px;font-weight:500;color:#0f172a">0%</span></div>
+            <div class="config-row"><span class="config-label">Requires Approval</span><div class="toggle on" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ STATEMENTS ═══════════ -->
+    <div class="page" id="page-statements">
+      <div class="section">
+        <div class="section-header"><h3>Statement Delivery</h3>
+          <div class="topbar-actions">
+            <button class="btn" onclick="showToast('Statement batch exported')">Export</button>
+            <button class="btn btn-primary" onclick="showToast('Batch generation started')">Generate Batch</button>
+          </div>
+        </div>
+
+        <div class="stmt-grid">
+          <div class="stmt-card">
+            <div class="stmt-icon digital">&#128241;</div>
+            <h4>Digital Statements</h4>
+            <p>SMS + Email delivery</p>
+            <div class="stmt-val teal">8,214</div>
+            <p>72.4% of total &bull; $0.02 avg cost</p>
+          </div>
+          <div class="stmt-card">
+            <div class="stmt-icon printed">&#128232;</div>
+            <h4>Printed Statements</h4>
+            <p>Physical mail delivery</p>
+            <div class="stmt-val amber">2,847</div>
+            <p>25.1% of total &bull; $0.89 avg cost</p>
+          </div>
+          <div class="stmt-card">
+            <div class="stmt-icon portal">&#127760;</div>
+            <h4>Portal Views</h4>
+            <p>Patient portal access</p>
+            <div class="stmt-val purple">4,128</div>
+            <p>36.4% engagement rate</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Statement Configuration</h3></div>
+        <div class="config-grid">
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon sms"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+              <h4>Generation Schedule</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Auto-Generate</span><div class="toggle on" data-toggle="stmt-auto" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Cycle Day</span><div><select class="config-select"><option>1st of Month</option><option>15th of Month</option><option>Bi-Monthly</option><option>Weekly</option></select></div></div>
+            <div class="config-row"><span class="config-label">Min Balance to Send</span><div><input class="config-input" value="5" style="width:72px"><span class="config-unit">$</span></div></div>
+          </div>
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <h4>Delivery Preferences</h4>
+            </div>
+            <div class="config-row"><span class="config-label">Digital First</span><div class="toggle on" data-toggle="stmt-digital" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Include Pay Link</span><div class="toggle on" data-toggle="stmt-paylink" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Print Fallback</span><div class="toggle on" data-toggle="stmt-print" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+          <div class="config-card">
+            <div class="config-card-header">
+              <div class="config-icon mail"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <h4>Compliance</h4>
+            </div>
+            <div class="config-row"><span class="config-label">HIPAA Masking</span><div class="toggle on" data-toggle="stmt-hipaa" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Itemized Charges</span><div class="toggle on" data-toggle="stmt-itemized" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Spanish Translation</span><div class="toggle" data-toggle="stmt-spanish" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Recent Statements</h3>
+          <div class="tab-bar" id="stmt-tabs">
+            <button class="active" data-sfilter="all">All</button>
+            <button data-sfilter="digital">Digital</button>
+            <button data-sfilter="print">Print</button>
+            <button data-sfilter="pending">Pending</button>
+          </div>
+        </div>
+        <div class="tracker-card">
+          <table class="stmt-table">
+            <thead><tr><th>Statement ID</th><th>Patient</th><th>Balance</th><th>Generated</th><th>Channel</th><th>Delivery Status</th><th>Paid</th></tr></thead>
+            <tbody id="stmt-tbody"></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -1324,6 +1695,177 @@ function initCharts() {
   });
 }
 
+// ─── Payment Data ───
+const recentPayments = [
+  { id:'TXN-90421', name:'Jane Morrison', amount:'$245.00', method:'Credit Card', channel:'Text-to-Pay', date:'Mar 23, 2:14 PM', status:'Completed', statusClass:'badge-green' },
+  { id:'TXN-90420', name:'Robert Chen', amount:'$1,200.00', method:'ACH', channel:'Email Link', date:'Mar 23, 1:48 PM', status:'Completed', statusClass:'badge-green' },
+  { id:'TXN-90419', name:'Maria Santos', amount:'$89.50', method:'Apple Pay', channel:'Text-to-Pay', date:'Mar 23, 12:33 PM', status:'Completed', statusClass:'badge-green' },
+  { id:'TXN-90418', name:'David Park', amount:'$450.00', method:'Credit Card', channel:'Portal', date:'Mar 23, 11:20 AM', status:'Completed', statusClass:'badge-green' },
+  { id:'TXN-90417', name:'Linda Williams', amount:'$75.00', method:'Google Pay', channel:'Text-to-Pay', date:'Mar 23, 10:05 AM', status:'Completed', statusClass:'badge-green' },
+  { id:'TXN-90416', name:'James O\'Brien', amount:'$320.00', method:'Credit Card', channel:'Email Link', date:'Mar 22, 4:42 PM', status:'Completed', statusClass:'badge-green' },
+  { id:'TXN-90415', name:'Sarah Kim', amount:'$156.75', method:'ACH', channel:'Text-to-Pay', date:'Mar 22, 3:18 PM', status:'Processing', statusClass:'badge-purple' },
+  { id:'TXN-90414', name:'Tom Brady', amount:'$2,100.00', method:'Credit Card', channel:'Portal', date:'Mar 22, 2:55 PM', status:'Completed', statusClass:'badge-green' }
+];
+
+const paymentPlans = [
+  { id:'PP-1042', name:'Robert Chen', total:'$4,800', paid:'$3,600', remaining:'$1,200', progress:75, nextDue:'Apr 1, 2026', status:'active' },
+  { id:'PP-1039', name:'Linda Williams', total:'$2,400', paid:'$1,800', remaining:'$600', progress:75, nextDue:'Apr 1, 2026', status:'active' },
+  { id:'PP-1035', name:'James O\'Brien', total:'$6,200', paid:'$2,480', remaining:'$3,720', progress:40, nextDue:'Apr 15, 2026', status:'active' },
+  { id:'PP-1028', name:'Angela Torres', total:'$1,500', paid:'$1,125', remaining:'$375', progress:75, nextDue:'Mar 28, 2026', status:'active' },
+  { id:'PP-1024', name:'Mike Jensen', total:'$3,600', paid:'$600', remaining:'$3,000', progress:17, nextDue:'Overdue — Mar 15', status:'past-due' },
+  { id:'PP-1019', name:'Sarah Kim', total:'$900', paid:'$900', remaining:'$0', progress:100, nextDue:'—', status:'completed' },
+  { id:'PP-1015', name:'David Park', total:'$2,100', paid:'$350', remaining:'$1,750', progress:17, nextDue:'Overdue — Mar 10', status:'past-due' },
+  { id:'PP-1011', name:'Karen Reynolds', total:'$1,800', paid:'$1,800', remaining:'$0', progress:100, nextDue:'—', status:'completed' }
+];
+
+const stmtEntries = [
+  { id:'ST-7821', name:'Jane Morrison', balance:'$245.00', generated:'Mar 22', channel:'sms', channelLabel:'SMS', delivery:'Delivered', deliveryClass:'badge-green', paid:'Yes' },
+  { id:'ST-7820', name:'Robert Chen', balance:'$1,200.00', generated:'Mar 22', channel:'email', channelLabel:'Email', delivery:'Opened', deliveryClass:'badge-green', paid:'Partial' },
+  { id:'ST-7819', name:'Maria Santos', balance:'$89.50', generated:'Mar 22', channel:'sms', channelLabel:'SMS', delivery:'Delivered', deliveryClass:'badge-green', paid:'Yes' },
+  { id:'ST-7818', name:'David Park', balance:'$450.00', generated:'Mar 22', channel:'portal', channelLabel:'Portal', delivery:'Viewed', deliveryClass:'badge-green', paid:'Yes' },
+  { id:'ST-7817', name:'Linda Williams', balance:'$2,400.00', generated:'Mar 21', channel:'print', channelLabel:'Print', delivery:'Mailed', deliveryClass:'badge-amber', paid:'No' },
+  { id:'ST-7816', name:'James O\'Brien', balance:'$320.00', generated:'Mar 21', channel:'email', channelLabel:'Email', delivery:'Bounced', deliveryClass:'badge-red', paid:'No' },
+  { id:'ST-7815', name:'Sarah Kim', balance:'$156.75', generated:'Mar 21', channel:'sms', channelLabel:'SMS', delivery:'Delivered', deliveryClass:'badge-green', paid:'Processing' },
+  { id:'ST-7814', name:'Tom Brady', balance:'$2,100.00', generated:'Mar 20', channel:'print', channelLabel:'Print', delivery:'In Queue', deliveryClass:'badge-purple', paid:'No' }
+];
+
+function renderPayments() {
+  const tbody = document.getElementById('pay-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  recentPayments.forEach(p => {
+    tbody.innerHTML += `<tr>
+      <td class="file-id">${p.id}</td><td>${p.name}</td><td style="font-weight:600;color:#059669">${p.amount}</td>
+      <td>${p.method}</td><td>${p.channel}</td><td>${p.date}</td>
+      <td><span class="badge ${p.statusClass}"><span class="dot"></span>${p.status}</span></td></tr>`;
+  });
+}
+
+function renderPlans() {
+  const search = (document.getElementById('plan-search')?.value || '').toLowerCase();
+  const tbody = document.getElementById('plan-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  paymentPlans.filter(p => {
+    if (search && !p.id.toLowerCase().includes(search) && !p.name.toLowerCase().includes(search)) return false;
+    return true;
+  }).forEach(p => {
+    const statusLabel = p.status === 'active' ? 'Active' : p.status === 'past-due' ? 'Past Due' : 'Completed';
+    tbody.innerHTML += `<tr>
+      <td class="file-id">${p.id}</td><td>${p.name}</td>
+      <td style="font-weight:500">${p.total}</td><td style="color:#059669;font-weight:500">${p.paid}</td>
+      <td style="color:#d97706;font-weight:500">${p.remaining}</td>
+      <td><div class="plan-progress"><div class="plan-progress-fill" style="width:${p.progress}%;${p.status==='past-due'?'background:#ef4444':''}"></div></div>${p.progress}%</td>
+      <td style="font-size:12px;${p.status==='past-due'?'color:#dc2626;font-weight:500':''}">${p.nextDue}</td>
+      <td><span class="plan-status ${p.status}">${statusLabel}</span></td></tr>`;
+  });
+}
+function filterPlans() { renderPlans(); }
+
+let stmtFilter = 'all';
+function renderStatements() {
+  const tbody = document.getElementById('stmt-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  stmtEntries.filter(s => {
+    if (stmtFilter === 'digital' && (s.channel === 'print')) return false;
+    if (stmtFilter === 'print' && s.channel !== 'print') return false;
+    if (stmtFilter === 'pending' && s.paid !== 'No') return false;
+    return true;
+  }).forEach(s => {
+    const paidColor = s.paid === 'Yes' ? 'color:#059669;font-weight:500' : s.paid === 'No' ? 'color:#dc2626' : 'color:#7c3aed';
+    tbody.innerHTML += `<tr>
+      <td class="file-id">${s.id}</td><td>${s.name}</td>
+      <td style="font-weight:500">${s.balance}</td><td>${s.generated}</td>
+      <td><span class="stmt-delivery ${s.channel}">${s.channelLabel}</span></td>
+      <td><span class="badge ${s.deliveryClass}"><span class="dot"></span>${s.delivery}</span></td>
+      <td style="${paidColor}">${s.paid}</td></tr>`;
+  });
+}
+document.querySelectorAll('#stmt-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#stmt-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    stmtFilter = btn.dataset.sfilter;
+    renderStatements();
+  });
+});
+
+// ─── Payment Range Tabs ───
+document.querySelectorAll('#pay-range-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#pay-range-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showToast('Showing ' + btn.textContent + ' payment data');
+  });
+});
+
+// ─── Payment Charts ───
+let payChartsInitialized = false;
+function initPayCharts() {
+  if (payChartsInitialized) return;
+  payChartsInitialized = true;
+
+  // Collection Trend — line
+  const payDays = ['Mar 17','Mar 18','Mar 19','Mar 20','Mar 21','Mar 22','Mar 23'];
+  new Chart(document.getElementById('chart-collection-trend'), {
+    type:'line',
+    data:{
+      labels: payDays,
+      datasets:[
+        { label:'Collected', data:[38200,42100,39800,44300,41700,45200,47830], borderColor:successCl, backgroundColor:successCl+'20', fill:true, tension:.4, borderWidth:2 },
+        { label:'Outstanding', data:[34100,31200,33400,29800,31500,28900,27415], borderColor:printCl, backgroundColor:printCl+'20', fill:true, tension:.4, borderWidth:2 }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:scaleOpts, y:{...scaleOpts, ticks:{...scaleOpts.ticks, callback:v=>'$'+(v/1000)+'k'}} },
+      plugins:{ legend:{position:'bottom'} }
+    }
+  });
+
+  // Payment Method — donut
+  new Chart(document.getElementById('chart-pay-method'), {
+    type:'doughnut',
+    data:{
+      labels:['Credit/Debit Card','ACH/Bank','Apple Pay','Google Pay','Portal'],
+      datasets:[{ data:[42,28,14,8,8], backgroundColor:[smsCl,'#7c3aed','#0f172a','#10b981',printCl], borderWidth:0, hoverOffset:8 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'68%',
+      plugins:{ legend:{position:'bottom'}, tooltip:{ callbacks:{ label: ctx=>ctx.label+': '+ctx.parsed+'%' } } }
+    }
+  });
+
+  // Aging Buckets — bar
+  new Chart(document.getElementById('chart-aging'), {
+    type:'bar',
+    data:{
+      labels:['0-30 Days','31-60 Days','61-90 Days','91-120 Days','120+ Days'],
+      datasets:[{ label:'Outstanding ($)', data:[312000,218000,164000,112000,86415], backgroundColor:[successCl, smsCl, printCl, '#ef4444','#991b1b'], borderRadius:6, barThickness:36 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:scaleOpts, y:{...scaleOpts, ticks:{...scaleOpts.ticks, callback:v=>'$'+(v/1000)+'k'}} },
+      plugins:{ legend:{display:false} }
+    }
+  });
+
+  // Payment by Channel — horizontal bar
+  new Chart(document.getElementById('chart-pay-channel'), {
+    type:'bar',
+    data:{
+      labels:['Text-to-Pay','Email Link','Patient Portal','Phone (IVR)','In-Person'],
+      datasets:[{ label:'Payments', data:[847220,198400,142800,38200,21210], backgroundColor:[smsCl,'#7c3aed',printCl,'#64748b','#10b981'], borderRadius:6, barThickness:28 }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      scales:{ x:{...scaleOpts, ticks:{...scaleOpts.ticks, callback:v=>'$'+(v/1000)+'k'}}, y:scaleOpts },
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: ctx=>'$'+ctx.parsed.x.toLocaleString() } } }
+    }
+  });
+}
+
 // ─── Lazy init charts when analytics page is shown ───
 let chartsInitialized = false;
 const origNavHandler = document.querySelectorAll('.nav-link[data-page]');
@@ -1333,12 +1875,18 @@ origNavHandler.forEach(link => {
       setTimeout(initCharts, 50);
       chartsInitialized = true;
     }
+    if (link.dataset.page === 'payments') {
+      setTimeout(initPayCharts, 50);
+    }
   });
 });
 
 // ─── Init ───
 renderFiles();
 renderAudit();
+renderPayments();
+renderPlans();
+renderStatements();
 </script>
 </body>
 </html>
