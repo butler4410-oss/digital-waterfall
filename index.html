@@ -500,6 +500,94 @@
   .integ-product p{font-size:11px;color:#64748b}
   .integ-product .integ-badge{margin-left:auto;flex-shrink:0;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;background:#ecfdf5;color:#059669}
 
+  /* ─── ROI Calculator ─── */
+  .roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+  .roi-card{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.03)}
+  .roi-card h3{font-size:15px;font-weight:700;color:#0f172a;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #f1f5f9}
+  .roi-field{margin-bottom:20px}
+  .roi-field:last-child{margin-bottom:0}
+  .roi-field label{display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px}
+  .roi-select{width:100%;padding:10px 14px;border:1px solid #e2e8f0;border-radius:10px;font-size:14px;color:#0f172a;background:#f8fafc;font-family:inherit;transition:all .15s;cursor:pointer}
+  .roi-select:focus{outline:none;border-color:#0891b2;box-shadow:0 0 0 3px rgba(8,145,178,.1)}
+  .roi-vol-wrap{display:flex;align-items:center;gap:12px}
+  .roi-range{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:#e8ecf1;outline:none}
+  .roi-range::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#06b6d4,#0891b2);cursor:pointer;box-shadow:0 2px 6px rgba(8,145,178,.3)}
+  .roi-vol-input{width:100px;padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;font-weight:600;color:#0f172a;text-align:right;font-family:inherit;background:#f8fafc}
+  .roi-vol-input:focus{outline:none;border-color:#0891b2;box-shadow:0 0 0 3px rgba(8,145,178,.1)}
+  .roi-channel-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .roi-channel-label{width:52px;font-size:13px;font-weight:500;color:#475569}
+  .roi-channel-input{width:60px;padding:7px 8px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;color:#0f172a;text-align:center;font-family:inherit;background:#f8fafc}
+  .roi-channel-input:focus{outline:none;border-color:#0891b2;box-shadow:0 0 0 3px rgba(8,145,178,.1)}
+  .roi-channel-unit{font-size:12px;color:#94a3b8;width:14px}
+  .roi-channel-bar{flex:1;height:8px;border-radius:4px;background:#f1f5f9;overflow:hidden}
+  .roi-channel-fill{height:100%;border-radius:4px;transition:width .5s ease}
+  .roi-channel-fill.sms{background:#0891b2}
+  .roi-channel-fill.email{background:#7c3aed}
+  .roi-channel-fill.print{background:#d97706}
+  .roi-mix-visual{height:12px;border-radius:6px;display:flex;overflow:hidden;margin-top:12px;border:1px solid #e8ecf1}
+  .roi-mix-seg{transition:width .5s ease;min-width:2px}
+  .roi-mix-seg.sms{background:#0891b2}
+  .roi-mix-seg.email{background:#7c3aed}
+  .roi-mix-seg.print{background:#d97706}
+  .roi-cost-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .roi-cost-row:last-child{margin-bottom:0}
+  .roi-cost-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .roi-cost-dot.sms{background:#0891b2}
+  .roi-cost-dot.email{background:#7c3aed}
+  .roi-cost-dot.print{background:#d97706}
+  .roi-cost-label{width:48px;font-size:13px;color:#475569}
+  .roi-cost-pre{font-size:13px;color:#94a3b8}
+  .roi-cost-input{width:72px;padding:7px 8px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;color:#0f172a;text-align:right;font-family:'SF Mono','Consolas',monospace;background:#f8fafc}
+  .roi-cost-input:focus{outline:none;border-color:#0891b2;box-shadow:0 0 0 3px rgba(8,145,178,.1)}
+
+  .roi-savings-card{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #a7f3d0;border-radius:16px;padding:32px;text-align:center;margin-bottom:20px}
+  .roi-savings-label{font-size:12px;font-weight:600;color:#064e3b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+  .roi-savings-value{font-size:52px;font-weight:800;color:#059669;line-height:1;letter-spacing:-1px;margin-bottom:6px}
+  .roi-savings-sub{font-size:14px;color:#065f46;font-weight:500}
+  .roi-savings-annual{font-size:20px;font-weight:700;color:#047857;margin-top:16px;padding-top:16px;border-top:1px solid #a7f3d0}
+  .roi-savings-annual span{font-size:13px;font-weight:500;color:#064e3b;display:block;margin-top:2px}
+
+  .roi-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-bottom:20px}
+  .roi-compare-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+  .roi-compare-card.projected{border-color:#a7f3d0;background:#f0fdf4}
+  .roi-compare-label{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+  .roi-compare-value{font-size:28px;font-weight:700;color:#0f172a;line-height:1}
+  .roi-compare-card.projected .roi-compare-value{color:#059669}
+  .roi-compare-per{font-size:11px;color:#94a3b8;margin-top:4px}
+  .roi-compare-arrow{font-size:24px;color:#10b981;font-weight:700}
+
+  .roi-projection{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+  .roi-projection h4{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:14px}
+  .roi-proj-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .roi-proj-row:last-child{margin-bottom:0}
+  .roi-proj-label{width:48px;font-size:12px;font-weight:500;color:#64748b}
+  .roi-proj-bars{flex:1;display:flex;align-items:center;gap:8px}
+  .roi-proj-bar{height:8px;border-radius:4px;transition:width .5s ease}
+  .roi-proj-bar.current{opacity:.3}
+  .roi-proj-bar.sms{background:#0891b2}
+  .roi-proj-bar.email{background:#7c3aed}
+  .roi-proj-bar.print{background:#d97706}
+  .roi-proj-nums{font-size:12px;color:#64748b;font-weight:500;white-space:nowrap}
+  .roi-proj-nums strong{color:#059669}
+
+  .roi-breakdown{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.03);margin-bottom:24px}
+  .roi-breakdown h3{font-size:15px;font-weight:700;color:#0f172a;margin-bottom:16px}
+  .roi-table{width:100%;border-collapse:separate;border-spacing:0}
+  .roi-table th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:#94a3b8;text-align:right;padding:10px 14px;background:#f8fafc;border-bottom:2px solid #e8ecf1}
+  .roi-table th:first-child{text-align:left}
+  .roi-table td{font-size:13px;padding:12px 14px;color:#475569;border-bottom:1px solid #f1f5f9;text-align:right;font-family:'SF Mono','Consolas',monospace;font-weight:500}
+  .roi-table td:first-child{text-align:left;font-family:inherit;font-weight:500;color:#0f172a}
+  .roi-table tbody tr:hover td{background:#f0f7ff}
+  .roi-table .savings-cell{color:#059669;font-weight:600}
+  .roi-table tfoot td{font-weight:700;color:#0f172a;border-top:2px solid #e8ecf1;border-bottom:none;background:#f8fafc}
+  .roi-table tfoot .savings-cell{color:#059669;font-size:14px}
+  .roi-insight{background:linear-gradient(135deg,#ecfeff,#f0f9ff);border:1px solid #bae6fd;border-radius:14px;padding:20px 24px;display:flex;align-items:flex-start;gap:14px;margin-top:20px}
+  .roi-insight-icon{width:36px;height:36px;border-radius:10px;background:#ecfeff;color:#0891b2;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+  .roi-insight-text{font-size:13px;color:#0c4a6e;line-height:1.6}
+  .roi-insight-text strong{color:#0369a1}
+
+  @media(max-width:900px){.roi-layout{grid-template-columns:1fr}}
+
   /* ─── Vertical Waterfall Builder ─── */
   .vwf{max-width:580px;margin:0 auto;padding:8px 0}
   .vwf-tier{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:24px 28px;position:relative;transition:all .25s;box-shadow:0 2px 12px rgba(0,0,0,.03)}
@@ -635,6 +723,13 @@
       </button>
     </div>
     <div class="nav-group">
+      <div class="nav-group-label">Sales</div>
+      <button class="nav-link" data-page="roi">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><path d="M16 3l5 5-5 5" opacity=".5"/></svg>
+        ROI Calculator
+      </button>
+    </div>
+    <div class="nav-group">
       <div class="nav-group-label">Intelligence</div>
       <button class="nav-link" data-page="analytics">
         <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -696,7 +791,7 @@
       </div>
     </div>
     <div class="topbar-actions">
-      <button class="btn" onclick="showToast('Report exported successfully')">Export</button>
+      <button class="btn">Export</button>
       <button class="btn btn-primary" onclick="openNewClientModal()">+ New Client</button>
     </div>
   </header>
@@ -829,6 +924,133 @@
           <button class="btn" onclick="document.querySelector('[data-page=tracker]').click()" style="font-size:11px;padding:5px 12px">View All</button>
         </div>
         <div class="dash-mini-tracker" id="mini-tracker"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════ ROI CALCULATOR PAGE ═══════════ -->
+    <div class="page" id="page-roi">
+      <div class="roi-layout">
+        <!-- Left: Inputs -->
+        <div class="roi-card">
+          <h3>Configure Scenario</h3>
+          <div class="roi-field">
+            <label>Industry</label>
+            <select class="roi-select" id="roi-industry" onchange="roiIndustryChange()">
+              <option value="healthcare">Healthcare</option>
+              <option value="collections">Collections / Revenue Cycle</option>
+              <option value="utilities">Utilities</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="roi-field">
+            <label>Monthly Message Volume</label>
+            <div class="roi-vol-wrap">
+              <input type="range" class="roi-range" id="roi-volume-range" min="1000" max="500000" step="1000" value="50000" oninput="roiSyncVolume(this.value)">
+              <input type="text" class="roi-vol-input" id="roi-volume-input" value="50,000" oninput="roiSyncVolumeText(this.value)">
+            </div>
+          </div>
+          <div class="roi-field">
+            <label>Current Channel Mix</label>
+            <div class="roi-channel-row">
+              <span class="roi-channel-label">SMS</span>
+              <input type="number" class="roi-channel-input" id="roi-cur-sms" value="35" min="0" max="100" oninput="roiCalc()">
+              <span class="roi-channel-unit">%</span>
+              <div class="roi-channel-bar"><div class="roi-channel-fill sms" id="roi-cur-sms-bar" style="width:35%"></div></div>
+            </div>
+            <div class="roi-channel-row">
+              <span class="roi-channel-label">Email</span>
+              <input type="number" class="roi-channel-input" id="roi-cur-email" value="25" min="0" max="100" oninput="roiCalc()">
+              <span class="roi-channel-unit">%</span>
+              <div class="roi-channel-bar"><div class="roi-channel-fill email" id="roi-cur-email-bar" style="width:25%"></div></div>
+            </div>
+            <div class="roi-channel-row">
+              <span class="roi-channel-label">Print</span>
+              <input type="number" class="roi-channel-input" id="roi-cur-print" value="40" min="0" max="100" oninput="roiCalc()">
+              <span class="roi-channel-unit">%</span>
+              <div class="roi-channel-bar"><div class="roi-channel-fill print" id="roi-cur-print-bar" style="width:40%"></div></div>
+            </div>
+            <div class="roi-mix-visual" id="roi-cur-mix">
+              <div class="roi-mix-seg sms" style="width:35%"></div>
+              <div class="roi-mix-seg email" style="width:25%"></div>
+              <div class="roi-mix-seg print" style="width:40%"></div>
+            </div>
+          </div>
+          <div class="roi-field">
+            <label>Cost Per Message</label>
+            <div class="roi-cost-row"><div class="roi-cost-dot sms"></div><span class="roi-cost-label">SMS</span><span class="roi-cost-pre">$</span><input type="text" class="roi-cost-input" id="roi-cost-sms" value="0.012" oninput="roiCalc()"></div>
+            <div class="roi-cost-row"><div class="roi-cost-dot email"></div><span class="roi-cost-label">Email</span><span class="roi-cost-pre">$</span><input type="text" class="roi-cost-input" id="roi-cost-email" value="0.008" oninput="roiCalc()"></div>
+            <div class="roi-cost-row"><div class="roi-cost-dot print"></div><span class="roi-cost-label">Print</span><span class="roi-cost-pre">$</span><input type="text" class="roi-cost-input" id="roi-cost-print" value="0.890" oninput="roiCalc()"></div>
+          </div>
+        </div>
+
+        <!-- Right: Results -->
+        <div>
+          <div class="roi-savings-card">
+            <div class="roi-savings-label">Estimated Monthly Savings</div>
+            <div class="roi-savings-value" id="roi-savings">$0</div>
+            <div class="roi-savings-sub" id="roi-savings-pct">0% reduction in delivery cost</div>
+            <div class="roi-savings-annual" id="roi-annual">$0 <span>projected annual savings</span></div>
+          </div>
+
+          <div class="roi-compare">
+            <div class="roi-compare-card">
+              <div class="roi-compare-label">Current Monthly Cost</div>
+              <div class="roi-compare-value" id="roi-cost-current">$0</div>
+              <div class="roi-compare-per" id="roi-cpm-current">$0.00 per message</div>
+            </div>
+            <div class="roi-compare-arrow">→</div>
+            <div class="roi-compare-card projected">
+              <div class="roi-compare-label">With Digital Waterfall</div>
+              <div class="roi-compare-value" id="roi-cost-projected">$0</div>
+              <div class="roi-compare-per" id="roi-cpm-projected">$0.00 per message</div>
+            </div>
+          </div>
+
+          <div class="roi-projection">
+            <h4>Channel Shift Projection</h4>
+            <div class="roi-proj-row">
+              <span class="roi-proj-label">SMS</span>
+              <div class="roi-proj-bars" style="flex:1">
+                <div class="roi-proj-bar current sms" id="roi-proj-sms-cur" style="width:35%"></div>
+                <div class="roi-proj-bar sms" id="roi-proj-sms-new" style="width:78%"></div>
+              </div>
+              <span class="roi-proj-nums" id="roi-proj-sms-nums">35% → <strong>78%</strong></span>
+            </div>
+            <div class="roi-proj-row">
+              <span class="roi-proj-label">Email</span>
+              <div class="roi-proj-bars" style="flex:1">
+                <div class="roi-proj-bar current email" id="roi-proj-email-cur" style="width:25%"></div>
+                <div class="roi-proj-bar email" id="roi-proj-email-new" style="width:16%"></div>
+              </div>
+              <span class="roi-proj-nums" id="roi-proj-email-nums">25% → <strong>16%</strong></span>
+            </div>
+            <div class="roi-proj-row">
+              <span class="roi-proj-label">Print</span>
+              <div class="roi-proj-bars" style="flex:1">
+                <div class="roi-proj-bar current print" id="roi-proj-print-cur" style="width:40%"></div>
+                <div class="roi-proj-bar print" id="roi-proj-print-new" style="width:4%"></div>
+              </div>
+              <span class="roi-proj-nums" id="roi-proj-print-nums">40% → <strong>4%</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakdown Table -->
+      <div class="roi-breakdown">
+        <h3>Cost Breakdown</h3>
+        <table class="roi-table">
+          <thead>
+            <tr><th>Channel</th><th>Current Vol</th><th>Current Cost</th><th>Projected Vol</th><th>Projected Cost</th><th>Savings</th></tr>
+          </thead>
+          <tbody id="roi-table-body"></tbody>
+          <tfoot id="roi-table-foot"></tfoot>
+        </table>
+
+        <div class="roi-insight">
+          <div class="roi-insight-icon">💡</div>
+          <div class="roi-insight-text" id="roi-insight">Configure your scenario above to see projected savings with Digital Waterfall's intelligent channel routing.</div>
+        </div>
       </div>
     </div>
 
@@ -998,7 +1220,7 @@
     <!-- ═══════════ ACCESS PAGE ═══════════ -->
     <div class="page" id="page-access">
       <div class="section">
-        <div class="section-header"><h3>Users &amp; Roles</h3><button class="btn btn-primary" onclick="showToast('Invite sent')">+ Invite User</button></div>
+        <div class="section-header"><h3>Users &amp; Roles</h3><button class="btn btn-primary">+ Invite User</button></div>
         <div class="rbac-card">
           <div class="card-title">Team Access</div>
           <div class="card-desc">Role-based permissions for this account. Each role scopes visibility and edit rights.</div>
@@ -1220,7 +1442,7 @@
 
       <div class="section">
         <div class="section-header"><h3>Recent Payments</h3>
-          <button class="btn" onclick="showToast('Payment report exported')">Export</button>
+          <button class="btn">Export</button>
         </div>
         <div class="tracker-card">
           <table class="file-table" id="payment-table">
@@ -1320,8 +1542,8 @@
       <div class="section">
         <div class="section-header"><h3>Payment Plans</h3>
           <div class="topbar-actions">
-            <button class="btn" onclick="showToast('Plan report exported')">Export</button>
-            <button class="btn btn-primary" onclick="showToast('New plan wizard coming in Phase 4')">+ New Plan Template</button>
+            <button class="btn">Export</button>
+            <button class="btn btn-primary">+ New Plan Template</button>
           </div>
         </div>
         <div class="pay-kpi-row">
@@ -1383,8 +1605,8 @@
       <div class="section">
         <div class="section-header"><h3>Statement Delivery</h3>
           <div class="topbar-actions">
-            <button class="btn" onclick="showToast('Statement batch exported')">Export</button>
-            <button class="btn btn-primary" onclick="showToast('Batch generation started')">Generate Batch</button>
+            <button class="btn">Export</button>
+            <button class="btn btn-primary">Generate Batch</button>
           </div>
         </div>
 
@@ -1610,7 +1832,7 @@
     <div class="page" id="page-audit">
       <div class="section">
         <div class="section-header"><h3>Compliance Status</h3>
-          <button class="btn" onclick="showToast('Compliance report downloaded')">Download Report</button>
+          <button class="btn">Download Report</button>
         </div>
         <div class="compliance-banner">
           <div class="compliance-badges">
@@ -1964,7 +2186,6 @@ function toggleSwitch(el) {
   if (key === 'email-enabled') { state.emailEnabled = el.classList.contains('on'); document.getElementById('tier-email')?.classList.toggle('disabled', !state.emailEnabled); }
   if (key === 'print-enabled') { state.printEnabled = el.classList.contains('on'); document.getElementById('tier-print')?.classList.toggle('disabled', !state.printEnabled); }
   addAuditEntry('config', '<strong>Chase Butler</strong> toggled ' + (key||'setting') + ' ' + (el.classList.contains('on') ? 'on' : 'off'));
-  showToast('Setting updated');
 }
 
 // ─── Config Change ───
@@ -1983,7 +2204,6 @@ function onConfigChange(el) {
     return;
   }
   addAuditEntry('config', '<strong>Chase Butler</strong> updated ' + (field || 'setting') + ' to ' + el.value);
-  showToast('Configuration saved');
 }
 
 // ─── Gate Modal ───
@@ -2244,14 +2464,14 @@ document.querySelectorAll('#analytics-range-tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('#analytics-range-tabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    showToast('Showing ' + btn.textContent + ' data');
+    // tab switched
   });
 });
 document.querySelectorAll('#cost-range-tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('#cost-range-tabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    showToast('Showing ' + btn.textContent + ' data');
+    // tab switched
   });
 });
 
@@ -2525,7 +2745,7 @@ document.querySelectorAll('#pay-range-tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('#pay-range-tabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    showToast('Showing ' + btn.textContent + ' payment data');
+    // tab switched
   });
 });
 
@@ -2845,6 +3065,117 @@ setInterval(updateThroughput, 3000);
   observer.observe(canvas);
 })();
 
+// ─── ROI Calculator ───
+const roiPresets = {
+  healthcare:  { curSms:35, curEmail:25, curPrint:40, projSms:78, projEmail:16, projPrint:4, undeliverable:2 },
+  collections: { curSms:25, curEmail:30, curPrint:45, projSms:61, projEmail:25, projPrint:11, undeliverable:3 },
+  utilities:   { curSms:30, curEmail:20, curPrint:50, projSms:72, projEmail:19, projPrint:7, undeliverable:2 },
+  custom:      { curSms:33, curEmail:33, curPrint:34, projSms:70, projEmail:20, projPrint:8, undeliverable:2 }
+};
+
+function roiIndustryChange() {
+  const p = roiPresets[document.getElementById('roi-industry').value];
+  document.getElementById('roi-cur-sms').value = p.curSms;
+  document.getElementById('roi-cur-email').value = p.curEmail;
+  document.getElementById('roi-cur-print').value = p.curPrint;
+  roiCalc();
+}
+
+function roiSyncVolume(v) {
+  document.getElementById('roi-volume-input').value = Number(v).toLocaleString();
+  roiCalc();
+}
+
+function roiSyncVolumeText(v) {
+  const n = parseInt(v.replace(/[^0-9]/g,'')) || 1000;
+  document.getElementById('roi-volume-range').value = Math.min(500000, Math.max(1000, n));
+  roiCalc();
+}
+
+function roiCalc() {
+  const vol = parseInt(document.getElementById('roi-volume-input').value.replace(/[^0-9]/g,'')) || 50000;
+  const curSms = parseFloat(document.getElementById('roi-cur-sms').value) || 0;
+  const curEmail = parseFloat(document.getElementById('roi-cur-email').value) || 0;
+  const curPrint = parseFloat(document.getElementById('roi-cur-print').value) || 0;
+  const costSms = parseFloat(document.getElementById('roi-cost-sms').value) || 0.012;
+  const costEmail = parseFloat(document.getElementById('roi-cost-email').value) || 0.008;
+  const costPrint = parseFloat(document.getElementById('roi-cost-print').value) || 0.89;
+  const preset = roiPresets[document.getElementById('roi-industry').value];
+
+  // Current volumes & costs
+  const curSmsVol = Math.round(vol * curSms / 100);
+  const curEmailVol = Math.round(vol * curEmail / 100);
+  const curPrintVol = Math.round(vol * curPrint / 100);
+  const curSmsCost = curSmsVol * costSms;
+  const curEmailCost = curEmailVol * costEmail;
+  const curPrintCost = curPrintVol * costPrint;
+  const curTotal = curSmsCost + curEmailCost + curPrintCost;
+
+  // Projected volumes & costs
+  const projSmsVol = Math.round(vol * preset.projSms / 100);
+  const projEmailVol = Math.round(vol * preset.projEmail / 100);
+  const projPrintVol = Math.round(vol * preset.projPrint / 100);
+  const projSmsCost = projSmsVol * costSms;
+  const projEmailCost = projEmailVol * costEmail;
+  const projPrintCost = projPrintVol * costPrint;
+  const projTotal = projSmsCost + projEmailCost + projPrintCost;
+
+  const savings = curTotal - projTotal;
+  const savingsPct = curTotal > 0 ? ((savings / curTotal) * 100).toFixed(1) : 0;
+
+  // Update savings card
+  document.getElementById('roi-savings').textContent = '$' + Math.round(savings).toLocaleString();
+  document.getElementById('roi-savings-pct').textContent = savingsPct + '% reduction in delivery cost';
+  document.getElementById('roi-annual').innerHTML = '$' + Math.round(savings * 12).toLocaleString() + ' <span>projected annual savings</span>';
+
+  // Update comparison
+  document.getElementById('roi-cost-current').textContent = '$' + Math.round(curTotal).toLocaleString();
+  document.getElementById('roi-cost-projected').textContent = '$' + Math.round(projTotal).toLocaleString();
+  document.getElementById('roi-cpm-current').textContent = '$' + (curTotal / vol).toFixed(4) + ' per message';
+  document.getElementById('roi-cpm-projected').textContent = '$' + (projTotal / vol).toFixed(4) + ' per message';
+
+  // Update current mix bars
+  document.getElementById('roi-cur-sms-bar').style.width = curSms + '%';
+  document.getElementById('roi-cur-email-bar').style.width = curEmail + '%';
+  document.getElementById('roi-cur-print-bar').style.width = curPrint + '%';
+  const mixEl = document.getElementById('roi-cur-mix');
+  mixEl.innerHTML = `<div class="roi-mix-seg sms" style="width:${curSms}%"></div><div class="roi-mix-seg email" style="width:${curEmail}%"></div><div class="roi-mix-seg print" style="width:${curPrint}%"></div>`;
+
+  // Update projection bars
+  document.getElementById('roi-proj-sms-cur').style.width = curSms + '%';
+  document.getElementById('roi-proj-sms-new').style.width = preset.projSms + '%';
+  document.getElementById('roi-proj-sms-nums').innerHTML = curSms + '% → <strong>' + preset.projSms + '%</strong>';
+  document.getElementById('roi-proj-email-cur').style.width = curEmail + '%';
+  document.getElementById('roi-proj-email-new').style.width = preset.projEmail + '%';
+  document.getElementById('roi-proj-email-nums').innerHTML = curEmail + '% → <strong>' + preset.projEmail + '%</strong>';
+  document.getElementById('roi-proj-print-cur').style.width = curPrint + '%';
+  document.getElementById('roi-proj-print-new').style.width = preset.projPrint + '%';
+  document.getElementById('roi-proj-print-nums').innerHTML = curPrint + '% → <strong>' + preset.projPrint + '%</strong>';
+
+  // Update breakdown table
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  const fmtV = n => n.toLocaleString();
+  const tbody = document.getElementById('roi-table-body');
+  const tfoot = document.getElementById('roi-table-foot');
+  tbody.innerHTML = `
+    <tr><td>📱 SMS</td><td>${fmtV(curSmsVol)}</td><td>${fmt(curSmsCost)}</td><td>${fmtV(projSmsVol)}</td><td>${fmt(projSmsCost)}</td><td class="savings-cell">${fmt(curSmsCost - projSmsCost)}</td></tr>
+    <tr><td>📧 Email</td><td>${fmtV(curEmailVol)}</td><td>${fmt(curEmailCost)}</td><td>${fmtV(projEmailVol)}</td><td>${fmt(projEmailCost)}</td><td class="savings-cell">${fmt(curEmailCost - projEmailCost)}</td></tr>
+    <tr><td>📬 Print / Mail</td><td>${fmtV(curPrintVol)}</td><td>${fmt(curPrintCost)}</td><td>${fmtV(projPrintVol)}</td><td>${fmt(projPrintCost)}</td><td class="savings-cell">${fmt(curPrintCost - projPrintCost)}</td></tr>`;
+  tfoot.innerHTML = `<tr><td>Total</td><td>${fmtV(vol)}</td><td>${fmt(curTotal)}</td><td>${fmtV(projSmsVol + projEmailVol + projPrintVol)}</td><td>${fmt(projTotal)}</td><td class="savings-cell">${fmt(savings)}/mo</td></tr>`;
+
+  // Insight text
+  const topSaver = curPrintCost - projPrintCost > curSmsCost - projSmsCost ? 'print-to-digital shift' : 'SMS optimization';
+  const insightEl = document.getElementById('roi-insight');
+  insightEl.innerHTML = `<strong>Digital Waterfall</strong> saves <strong>${fmt(savings)}/month</strong> (${savingsPct}%) by routing ${preset.projSms}% of messages through SMS at $${costSms.toFixed(3)}/msg instead of print at $${costPrint.toFixed(2)}/msg. The biggest driver is the <strong>${topSaver}</strong> — shifting ${curPrint}% print volume down to ${preset.projPrint}%. Annual impact: <strong>${fmt(savings * 12)}</strong>.`;
+}
+
+// Run initial calc when ROI page is shown
+document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+  link.addEventListener('click', () => {
+    if (link.dataset.page === 'roi') setTimeout(roiCalc, 50);
+  });
+});
+
 // ─── Init ───
 renderFiles();
 renderAudit();
@@ -2854,6 +3185,7 @@ renderStatements();
 renderActivityFeed();
 renderMiniTracker();
 setTimeout(animateCountUp, 300);
+roiCalc();
 </script>
 </body>
 </html>
