@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Waterfall — Matrix</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#fff;color:#1e293b;-webkit-font-smoothing:antialiased}
+
+  /* ─── Sidebar ─── */
+  .sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:#fff;border-right:1px solid #e8ecf1;display:flex;flex-direction:column;z-index:10}
+  .sidebar-logo{padding:28px 24px 24px;display:flex;align-items:center;gap:10px}
+  .logo-mark{width:32px;height:32px;background:#0891b2;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px}
+  .logo-text{font-size:15px;font-weight:600;color:#0f172a;letter-spacing:-.3px}
+  .logo-text span{display:block;font-size:10px;font-weight:400;color:#94a3b8;letter-spacing:.3px;text-transform:uppercase;margin-top:1px}
+  .sidebar-nav{flex:1;padding:8px 12px;overflow-y:auto}
+  .nav-group{margin-bottom:24px}
+  .nav-group-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;padding:0 12px;margin-bottom:6px}
+  .nav-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;color:#64748b;cursor:pointer;transition:all .15s;text-decoration:none;font-weight:450;border:none;background:none;width:100%;text-align:left}
+  .nav-link:hover{background:#f1f5f9;color:#334155}
+  .nav-link.active{background:#ecfeff;color:#0891b2;font-weight:500}
+  .nav-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0}
+  .nav-link .count{margin-left:auto;font-size:10px;font-weight:600;background:#ef4444;color:#fff;padding:1px 6px;border-radius:10px}
+  .sidebar-footer{padding:16px 20px;border-top:1px solid #e8ecf1;display:flex;align-items:center;gap:10px}
+  .avatar{width:30px;height:30px;border-radius:50%;background:#0891b2;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600}
+  .user-meta{font-size:12px}
+  .user-meta .name{font-weight:500;color:#1e293b}
+  .user-meta .role{color:#94a3b8;font-size:11px}
+
+  /* ─── Main ─── */
+  .main{margin-left:220px;background:#f8fafc;min-height:100vh}
+  .topbar{background:#fff;border-bottom:1px solid #e8ecf1;padding:18px 40px;display:flex;align-items:center;justify-content:space-between}
+  .topbar-left{display:flex;align-items:center;gap:20px}
+  .topbar-left h2{font-size:18px;font-weight:600;color:#0f172a}
+  .client-pill{display:flex;align-items:center;gap:8px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:20px;padding:6px 16px 6px 10px;font-size:13px;color:#475569;cursor:pointer;position:relative}
+  .client-pill .dot{width:7px;height:7px;border-radius:50%;background:#10b981}
+  .client-pill svg{flex-shrink:0}
+  .client-dropdown{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid #e2e8f0;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.08);padding:6px;min-width:240px;display:none;z-index:20}
+  .client-dropdown.open{display:block}
+  .client-option{padding:10px 14px;border-radius:6px;font-size:13px;color:#475569;cursor:pointer;display:flex;align-items:center;gap:8px}
+  .client-option:hover{background:#f1f5f9}
+  .client-option.active{background:#ecfeff;color:#0891b2;font-weight:500}
+  .client-option .dot{width:7px;height:7px;border-radius:50%;background:#10b981}
+  .topbar-actions{display:flex;gap:8px}
+  .btn{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid #e2e8f0;background:#fff;color:#475569;cursor:pointer;transition:all .15s;font-family:inherit}
+  .btn:hover{border-color:#cbd5e1;background:#f8fafc}
+  .btn-primary{background:#0891b2;border-color:#0891b2;color:#fff}
+  .btn-primary:hover{background:#0e7490}
+
+  /* ─── Content ─── */
+  .content{padding:32px 40px;max-width:1200px}
+  .page{display:none}
+  .page.active{display:block}
+
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+  .stat{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:22px 24px;transition:box-shadow .2s}
+  .stat:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .stat-label{font-size:12px;color:#94a3b8;font-weight:500;margin-bottom:6px}
+  .stat-value{font-size:28px;font-weight:700;color:#0f172a;line-height:1;transition:color .3s}
+  .stat-value.teal{color:#0891b2}
+  .stat-value.green{color:#10b981}
+  .stat-value.amber{color:#f59e0b}
+  .stat-sub{font-size:11px;color:#94a3b8;margin-top:6px}
+
+  /* Section */
+  .section{margin-bottom:40px}
+  .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .section-header h3{font-size:16px;font-weight:600;color:#0f172a}
+  .tab-bar{display:flex;gap:2px;background:#f1f5f9;border-radius:8px;padding:3px}
+  .tab-bar button{padding:6px 14px;font-size:12px;font-weight:500;border:none;background:transparent;color:#64748b;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .15s}
+  .tab-bar button.active{background:#fff;color:#0f172a;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ─── Waterfall ─── */
+  .waterfall-card{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:40px 32px;overflow:hidden}
+  .waterfall{display:flex;align-items:center;justify-content:center;gap:0;padding:16px 0}
+  .tier{display:flex;flex-direction:column;align-items:center;width:180px;position:relative}
+  .tier-box{width:160px;padding:28px 16px 24px;border-radius:16px;text-align:center;position:relative;transition:transform .2s,box-shadow .2s;cursor:pointer}
+  .tier-box:hover{transform:translateY(-3px)}
+  .tier-box svg{width:36px;height:36px;margin-bottom:10px}
+  .tier-box .tier-name{font-size:13px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px}
+  .tier-box .tier-pct{font-size:30px;font-weight:700;line-height:1.1;transition:all .5s}
+  .tier-box .tier-desc{font-size:11px;opacity:.75;margin-top:2px}
+  .tier-box.sms{background:linear-gradient(135deg,#ecfeff,#cffafe);color:#0e7490;border:1px solid #a5f3fc}
+  .tier-box.sms:hover{box-shadow:0 8px 24px rgba(8,145,178,.12)}
+  .tier-box.email{background:linear-gradient(135deg,#f5f3ff,#ede9fe);color:#6d28d9;border:1px solid #ddd6fe}
+  .tier-box.email:hover{box-shadow:0 8px 24px rgba(109,40,217,.12)}
+  .tier-box.print{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#b45309;border:1px solid #fde68a}
+  .tier-box.print:hover{box-shadow:0 8px 24px rgba(180,83,9,.12)}
+  .tier-box.disabled{opacity:.35;pointer-events:none}
+
+  .gate{display:flex;flex-direction:column;align-items:center;width:120px;gap:6px}
+  .gate-connector{display:flex;align-items:center;gap:0}
+  .gate-line{width:28px;height:1.5px;background:#cbd5e1;transition:background .3s}
+  .gate-node{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid #0891b2;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+  .gate-node:hover{background:#ecfeff;transform:scale(1.1)}
+  .gate-node svg{width:14px;height:14px;stroke:#0891b2;fill:none;stroke-width:2}
+  .gate-label{font-size:10px;font-weight:600;color:#0891b2;text-transform:uppercase;letter-spacing:.5px}
+  .gate-timing{font-size:14px;font-weight:600;color:#0f172a;transition:all .3s}
+  .gate-sub{font-size:10px;color:#94a3b8}
+
+  /* ─── Config Cards ─── */
+  .config-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .config-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px;transition:box-shadow .2s}
+  .config-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .config-card-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid #f1f5f9}
+  .config-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+  .config-icon.sms{background:#ecfeff;color:#0891b2}
+  .config-icon.email{background:#f5f3ff;color:#7c3aed}
+  .config-icon.mail{background:#fffbeb;color:#d97706}
+  .config-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .config-card-header h4{font-size:13px;font-weight:600;color:#0f172a}
+  .config-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+  .config-row+.config-row{border-top:1px solid #f8fafc}
+  .config-label{font-size:13px;color:#64748b}
+  .config-input{width:64px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;color:#0f172a;text-align:center;font-family:inherit;background:#f8fafc;transition:border .15s}
+  .config-input:focus{outline:none;border-color:#0891b2;background:#fff}
+  .config-unit{font-size:11px;color:#94a3b8;margin-left:6px}
+  .config-select{padding:6px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:12px;color:#0f172a;background:#f8fafc;font-family:inherit}
+  .toggle{width:38px;height:22px;border-radius:11px;background:#e2e8f0;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+  .toggle.on{background:#0891b2}
+  .toggle .knob{width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;box-shadow:0 1px 3px rgba(0,0,0,.12);transition:left .2s}
+  .toggle.on .knob{left:18px}
+
+  /* ─── File Tracker ─── */
+  .tracker-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px;overflow-x:auto}
+  .search-bar{display:flex;gap:8px;margin-bottom:16px}
+  .search-input{flex:1;padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-family:inherit;color:#0f172a;background:#f8fafc;transition:border .15s}
+  .search-input:focus{outline:none;border-color:#0891b2;background:#fff}
+  .file-table{width:100%;border-collapse:collapse}
+  .file-table th{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;text-align:left;padding:10px 14px;border-bottom:1px solid #e8ecf1;cursor:pointer;user-select:none}
+  .file-table th:hover{color:#64748b}
+  .file-table td{font-size:13px;padding:14px;color:#475569;border-bottom:1px solid #f1f5f9}
+  .file-table tbody tr{transition:background .1s}
+  .file-table tbody tr:hover td{background:#f8fafc}
+  .file-table .file-id{font-family:'SF Mono','Consolas',monospace;font-size:11px;color:#0891b2;cursor:pointer}
+  .file-table .file-id:hover{text-decoration:underline}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500}
+  .badge .dot{width:6px;height:6px;border-radius:50%}
+  .badge-green{background:#ecfdf5;color:#059669}.badge-green .dot{background:#10b981}
+  .badge-red{background:#fef2f2;color:#dc2626}.badge-red .dot{background:#ef4444}
+  .badge-purple{background:#f5f3ff;color:#7c3aed}.badge-purple .dot{background:#8b5cf6}
+  .badge-amber{background:#fffbeb;color:#d97706}.badge-amber .dot{background:#f59e0b}
+  .badge-blue{background:#ecfeff;color:#0891b2}.badge-blue .dot{background:#06b6d4}
+  .progress{width:80px;height:5px;background:#f1f5f9;border-radius:3px;overflow:hidden}
+  .progress-fill{height:100%;border-radius:3px;transition:width .5s}
+  .progress-fill.green{background:#10b981}.progress-fill.blue{background:#0891b2}
+  .progress-fill.purple{background:#8b5cf6}.progress-fill.amber{background:#f59e0b}
+  .next-action{font-size:12px}
+  .next-action.muted{color:#cbd5e1}.next-action.teal{color:#0891b2}
+  .next-action.purple{color:#7c3aed}.next-action.amber{color:#d97706}
+
+  /* ─── Timeline ─── */
+  .timeline-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:32px}
+  .timeline-subtitle{font-size:13px;color:#94a3b8;margin-bottom:28px}
+  .timeline{display:flex;align-items:flex-start;position:relative;padding:0 20px}
+  .tl-line{position:absolute;left:60px;right:60px;top:20px;height:2px;background:#e8ecf1;z-index:0}
+  .tl-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+  .tl-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+  .tl-dot svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
+  .tl-dot.sms{background:#0891b2}.tl-dot.wait{background:#fff;border:2px dashed #cbd5e1}
+  .tl-dot.wait svg{stroke:#94a3b8}.tl-dot.email{background:#7c3aed}
+  .tl-dot.mail{background:#d97706}.tl-dot.done{background:#10b981}
+  .tl-label{font-size:12px;font-weight:500;color:#0f172a;text-align:center}
+  .tl-time{font-size:11px;color:#94a3b8;text-align:center;margin-top:2px;transition:all .3s}
+
+  /* ─── Two-col ─── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+  /* ─── RBAC ─── */
+  .rbac-card,.audit-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px}
+  .card-title{font-size:14px;font-weight:600;color:#0f172a;margin-bottom:4px}
+  .card-desc{font-size:12px;color:#94a3b8;margin-bottom:20px}
+  .role-list{list-style:none}
+  .role-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #f1f5f9}
+  .role-item:last-child{border-bottom:none}
+  .role-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
+  .role-avatar.admin{background:#0891b2}.role-avatar.sales{background:#7c3aed}
+  .role-avatar.ops{background:#d97706}.role-avatar.client{background:#64748b}
+  .role-info{flex:1;min-width:0}
+  .role-name{font-size:13px;font-weight:500;color:#0f172a}
+  .role-email{font-size:11px;color:#94a3b8}
+  .role-badge{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+  .role-badge.admin{background:#ecfeff;color:#0891b2}
+  .role-badge.sales{background:#f5f3ff;color:#7c3aed}
+  .role-badge.ops{background:#fffbeb;color:#d97706}
+  .role-badge.client{background:#f1f5f9;color:#64748b}
+  .perm-grid{margin-top:20px}
+  .perm-header{display:grid;grid-template-columns:2fr repeat(4,1fr);padding:8px 0;border-bottom:1px solid #e8ecf1}
+  .perm-header span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;text-align:center}
+  .perm-header span:first-child{text-align:left}
+  .perm-row{display:grid;grid-template-columns:2fr repeat(4,1fr);padding:10px 0;border-bottom:1px solid #f8fafc;align-items:center}
+  .perm-row span{text-align:center;font-size:13px}
+  .perm-row span:first-child{text-align:left;font-size:13px;color:#475569}
+  .perm-check{color:#10b981;font-weight:600}
+  .perm-dash{color:#e2e8f0}
+  .perm-lock{color:#ef4444;font-size:11px}
+
+  /* ─── Audit ─── */
+  .audit-list{list-style:none}
+  .audit-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f1f5f9}
+  .audit-item:last-child{border-bottom:none}
+  .audit-icon-wrap{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .audit-icon-wrap svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .audit-icon-wrap.config{background:#ecfeff;color:#0891b2}
+  .audit-icon-wrap.auth{background:#f5f3ff;color:#7c3aed}
+  .audit-icon-wrap.alert{background:#fef2f2;color:#dc2626}
+  .audit-icon-wrap.export{background:#fffbeb;color:#d97706}
+  .audit-icon-wrap.access{background:#ecfdf5;color:#059669}
+  .audit-body{flex:1;min-width:0}
+  .audit-msg{font-size:13px;color:#334155;line-height:1.4}
+  .audit-msg strong{font-weight:600;color:#0f172a}
+  .audit-meta{display:flex;gap:12px;margin-top:3px}
+  .audit-meta span{font-size:11px;color:#94a3b8}
+  .audit-meta .audit-ip{font-family:'SF Mono','Consolas',monospace;font-size:10px}
+
+  /* ─── Compliance ─── */
+  .compliance-banner{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px;display:flex;align-items:center;gap:20px}
+  .compliance-badges{display:flex;gap:12px;flex:1;flex-wrap:wrap}
+  .comp-badge{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;background:#f8fafc;border:1px solid #e8ecf1}
+  .comp-badge-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+  .comp-badge-icon.soc2{background:#ecfeff;color:#0891b2}
+  .comp-badge-icon.hipaa{background:#ecfdf5;color:#059669}
+  .comp-badge-icon.tcpa{background:#f5f3ff;color:#7c3aed}
+  .comp-badge-icon.encrypt{background:#fffbeb;color:#d97706}
+  .comp-badge-text{font-size:12px}
+  .comp-badge-text .comp-name{font-weight:600;color:#0f172a}
+  .comp-badge-text .comp-status{color:#10b981;font-size:11px}
+
+  /* ─── Analytics ─── */
+  .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .chart-grid.three{grid-template-columns:1fr 1fr 1fr}
+  .chart-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;padding:24px;position:relative}
+  .chart-card.full{grid-column:1/-1}
+  .chart-card h4{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:4px}
+  .chart-card .chart-desc{font-size:11px;color:#94a3b8;margin-bottom:16px}
+  .chart-wrap{position:relative;width:100%;height:260px}
+  .chart-wrap.tall{height:320px}
+  .chart-wrap.short{height:200px}
+  .chart-wrap canvas{width:100%!important;height:100%!important}
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}
+  .kpi{background:#fff;border:1px solid #e8ecf1;border-radius:12px;padding:20px 22px;transition:box-shadow .2s}
+  .kpi:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .kpi-label{font-size:11px;color:#94a3b8;font-weight:500;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+  .kpi-value{font-size:24px;font-weight:700;color:#0f172a;line-height:1}
+  .kpi-value.teal{color:#0891b2}.kpi-value.green{color:#10b981}
+  .kpi-value.amber{color:#f59e0b}.kpi-value.red{color:#ef4444}.kpi-value.purple{color:#7c3aed}
+  .kpi-delta{font-size:11px;margin-top:5px;font-weight:500}
+  .kpi-delta.up{color:#10b981}.kpi-delta.down{color:#ef4444}.kpi-delta.neutral{color:#94a3b8}
+  .cost-table{width:100%;border-collapse:collapse;margin-top:8px}
+  .cost-table th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;text-align:left;padding:10px 14px;border-bottom:1px solid #e8ecf1}
+  .cost-table td{font-size:13px;padding:12px 14px;color:#475569;border-bottom:1px solid #f1f5f9}
+  .cost-table tbody tr:hover td{background:#f8fafc}
+  .cost-table .cost-val{font-weight:600;font-family:'SF Mono','Consolas',monospace;font-size:12px}
+  .cost-table .cost-val.green{color:#10b981}.cost-table .cost-val.amber{color:#d97706}.cost-table .cost-val.red{color:#ef4444}
+  .savings-highlight{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #a7f3d0;border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;margin-top:16px}
+  .savings-highlight .savings-val{font-size:32px;font-weight:700;color:#059669;line-height:1}
+  .savings-highlight .savings-text{font-size:13px;color:#064e3b}
+  .savings-highlight .savings-text strong{font-weight:600}
+
+  /* ─── Toast ─── */
+  .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.15);transform:translateY(80px);opacity:0;transition:all .3s;z-index:100;display:flex;align-items:center;gap:8px}
+  .toast.show{transform:translateY(0);opacity:1}
+  .toast .toast-icon{color:#10b981}
+
+  /* ─── Modal ─── */
+  .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:50;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+  .modal-overlay.open{display:flex}
+  .modal{background:#fff;border-radius:16px;padding:32px;width:480px;max-width:90vw;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+  .modal h3{font-size:16px;font-weight:600;margin-bottom:4px}
+  .modal .modal-desc{font-size:13px;color:#94a3b8;margin-bottom:24px}
+  .modal .config-row{padding:12px 0}
+  .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:24px;padding-top:16px;border-top:1px solid #f1f5f9}
+</style>
+</head>
+<body>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span class="toast-icon">&#10003;</span> <span id="toast-msg">Saved</span></div>
+
+<!-- Gate Edit Modal -->
+<div class="modal-overlay" id="gate-modal">
+  <div class="modal">
+    <h3 id="gate-modal-title">Edit Gate 1</h3>
+    <div class="modal-desc">Configure escalation rules between tiers.</div>
+    <div class="config-row">
+      <span class="config-label">Escalation Delay</span>
+      <div><input class="config-input" id="gate-delay-input" value="10"><span class="config-unit" id="gate-delay-unit">min</span></div>
+    </div>
+    <div class="config-row">
+      <span class="config-label">Max Retries</span>
+      <div><input class="config-input" id="gate-retry-input" value="2"><span class="config-unit">attempts</span></div>
+    </div>
+    <div class="config-row">
+      <span class="config-label">On Hard Fail</span>
+      <select class="config-select" id="gate-fail-select"><option>Escalate Immediately</option><option>Hold</option><option>Stop</option></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeGateModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGateModal()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- New Client Modal -->
+<div class="modal-overlay" id="new-client-modal">
+  <div class="modal">
+    <h3>New Client Profile</h3>
+    <div class="modal-desc">Create a new waterfall configuration from an industry template.</div>
+    <div class="config-row">
+      <span class="config-label">Client Name</span>
+      <input class="config-input" id="new-client-name" style="width:180px" placeholder="e.g. City Hospital">
+    </div>
+    <div class="config-row">
+      <span class="config-label">Industry</span>
+      <select class="config-select" id="new-client-industry"><option>Healthcare</option><option>Collections</option><option>Utilities</option><option>Custom</option></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeNewClientModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="createNewClient()">Create Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">M</div>
+    <div class="logo-text">Matrix <span>Digital Waterfall</span></div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-label">Overview</div>
+      <button class="nav-link active" data-page="dashboard">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+        <span class="count">3</span>
+      </button>
+      <button class="nav-link" data-page="waterfall">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12l4-4 4 4M14 8l4-4 4 4"/></svg>
+        Waterfall Builder
+      </button>
+      <button class="nav-link" data-page="tracker">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        File Tracker
+      </button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Configuration</div>
+      <button class="nav-link" data-page="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Channel Settings
+      </button>
+      <button class="nav-link" data-page="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        Timing Profiles
+      </button>
+      <button class="nav-link" data-page="settings">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Guardrails
+      </button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Analytics</div>
+      <button class="nav-link" data-page="analytics">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Delivery Rates
+      </button>
+      <button class="nav-link" data-page="costs">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Cost Analysis
+      </button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Security</div>
+      <button class="nav-link" data-page="compliance">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Compliance
+      </button>
+      <button class="nav-link" data-page="access">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        Users &amp; Roles
+      </button>
+      <button class="nav-link" data-page="audit">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Audit Log
+      </button>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <div class="avatar">CB</div>
+    <div class="user-meta">
+      <div class="name">Chase Butler</div>
+      <div class="role">Admin</div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main -->
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-left">
+      <h2 id="page-title">Dashboard</h2>
+      <div class="client-pill" id="client-pill" onclick="toggleClientDropdown()">
+        <span class="dot"></span>
+        <span id="client-name">Regional Medical Center</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+        <div class="client-dropdown" id="client-dropdown">
+          <div class="client-option active" data-client="Regional Medical Center" data-industry="healthcare">
+            <span class="dot"></span>Regional Medical Center
+          </div>
+          <div class="client-option" data-client="Lakeside Family Practice" data-industry="healthcare">
+            <span class="dot"></span>Lakeside Family Practice
+          </div>
+          <div class="client-option" data-client="Summit Collections" data-industry="collections">
+            <span class="dot"></span>Summit Collections
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn" onclick="showToast('Report exported successfully')">Export</button>
+      <button class="btn btn-primary" onclick="openNewClientModal()">+ New Client</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ═══════════ DASHBOARD PAGE ═══════════ -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats">
+        <div class="stat"><div class="stat-label">Total Messages Today</div><div class="stat-value" id="stat-total">12,847</div><div class="stat-sub">+8.3% vs yesterday</div></div>
+        <div class="stat"><div class="stat-label">Delivered at SMS</div><div class="stat-value green" id="stat-sms">78.4%</div><div class="stat-sub" id="stat-sms-sub">10,073 recipients reached</div></div>
+        <div class="stat"><div class="stat-label">Escalated to Email</div><div class="stat-value teal" id="stat-email">16.2%</div><div class="stat-sub" id="stat-email-sub">2,081 messages</div></div>
+        <div class="stat"><div class="stat-label">Escalated to Print</div><div class="stat-value amber" id="stat-print">4.1%</div><div class="stat-sub" id="stat-print-sub">527 letters queued</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Waterfall Flow</h3>
+          <div class="tab-bar" id="wf-tabs"><button class="active" data-wftab="live">Live</button><button data-wftab="simulate">Simulate</button><button data-wftab="history">History</button></div>
+        </div>
+        <div class="waterfall-card">
+          <div class="waterfall">
+            <div class="tier"><div class="tier-box sms" id="tier-sms">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <div class="tier-name">SMS</div><div class="tier-pct" id="wf-sms-pct">78.4%</div><div class="tier-desc">Delivered at Tier 1</div>
+            </div></div>
+            <div class="gate">
+              <div class="gate-connector"><div class="gate-line"></div>
+                <div class="gate-node" onclick="openGateModal(1)" title="Edit Gate 1">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09"/></svg>
+                </div><div class="gate-line"></div></div>
+              <div class="gate-label">Gate 1</div><div class="gate-timing" id="gate1-display">10 min</div><div class="gate-sub" id="gate1-sub">2 retries, then release</div>
+            </div>
+            <div class="tier"><div class="tier-box email" id="tier-email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <div class="tier-name">Email</div><div class="tier-pct" id="wf-email-pct">16.2%</div><div class="tier-desc">Caught at Tier 2</div>
+            </div></div>
+            <div class="gate">
+              <div class="gate-connector"><div class="gate-line"></div>
+                <div class="gate-node" onclick="openGateModal(2)" title="Edit Gate 2">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09"/></svg>
+                </div><div class="gate-line"></div></div>
+              <div class="gate-label">Gate 2</div><div class="gate-timing" id="gate2-display">8 hours</div><div class="gate-sub" id="gate2-sub">Soft bounce retry x2</div>
+            </div>
+            <div class="tier"><div class="tier-box print" id="tier-print">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <div class="tier-name">Print</div><div class="tier-pct" id="wf-print-pct">4.1%</div><div class="tier-desc">Final delivery</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="section">
+        <div class="section-header"><h3>Message Journey Preview</h3></div>
+        <div class="timeline-card">
+          <div class="timeline-subtitle">What happens to a message sent right now? Based on current gate settings.</div>
+          <div class="timeline">
+            <div class="tl-line"></div>
+            <div class="tl-step"><div class="tl-dot sms"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="tl-label">SMS Sent</div><div class="tl-time">T + 0 min</div></div>
+            <div class="tl-step"><div class="tl-dot wait"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="tl-label">Wait</div><div class="tl-time" id="tl-wait1">up to 10 min</div></div>
+            <div class="tl-step"><div class="tl-dot email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="tl-label">Email Sent</div><div class="tl-time" id="tl-email-time">T + 10 min</div></div>
+            <div class="tl-step"><div class="tl-dot wait"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="tl-label">Monitor Opens</div><div class="tl-time" id="tl-wait2">up to 8 hrs</div></div>
+            <div class="tl-step"><div class="tl-dot mail"><svg viewBox="0 0 24 24"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><div class="tl-label">Print Queued</div><div class="tl-time" id="tl-print-time">T + 8 hrs 10 min</div></div>
+            <div class="tl-step"><div class="tl-dot done"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div><div class="tl-label">Mailed</div><div class="tl-time">Next batch cutoff</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ WATERFALL PAGE ═══════════ -->
+    <div class="page" id="page-waterfall">
+      <div class="section">
+        <div class="section-header"><h3>Waterfall Builder</h3></div>
+        <div class="waterfall-card">
+          <div class="waterfall">
+            <div class="tier"><div class="tier-box sms"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><div class="tier-name">SMS</div><div class="tier-pct" id="wb-sms-pct">78.4%</div><div class="tier-desc">Tier 1</div></div></div>
+            <div class="gate"><div class="gate-connector"><div class="gate-line"></div><div class="gate-node" onclick="openGateModal(1)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg></div><div class="gate-line"></div></div><div class="gate-label">Gate 1</div><div class="gate-timing" id="wb-gate1">10 min</div></div>
+            <div class="tier"><div class="tier-box email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div class="tier-name">Email</div><div class="tier-pct" id="wb-email-pct">16.2%</div><div class="tier-desc">Tier 2</div></div></div>
+            <div class="gate"><div class="gate-connector"><div class="gate-line"></div><div class="gate-node" onclick="openGateModal(2)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg></div><div class="gate-line"></div></div><div class="gate-label">Gate 2</div><div class="gate-timing" id="wb-gate2">8 hours</div></div>
+            <div class="tier"><div class="tier-box print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><div class="tier-name">Print</div><div class="tier-pct" id="wb-print-pct">4.1%</div><div class="tier-desc">Tier 3</div></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Inline settings on builder page -->
+      <div class="section" id="builder-settings"></div>
+    </div>
+
+    <!-- ═══════════ SETTINGS PAGE ═══════════ -->
+    <div class="page" id="page-settings">
+      <div class="section">
+        <div class="section-header"><h3>Channel Settings</h3>
+          <div class="tab-bar" id="industry-tabs">
+            <button class="active" data-industry="healthcare">Healthcare</button>
+            <button data-industry="collections">Collections</button>
+            <button data-industry="utilities">Utilities</button>
+            <button data-industry="custom">Custom</button>
+          </div>
+        </div>
+        <div class="config-grid">
+          <!-- SMS -->
+          <div class="config-card">
+            <div class="config-card-header"><div class="config-icon sms"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h4>SMS Settings</h4></div>
+            <div class="config-row"><span class="config-label">Enabled</span><div class="toggle on" data-toggle="sms-enabled" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Max Retries</span><div><input class="config-input" data-field="sms-retries" value="2" onchange="onConfigChange(this)"><span class="config-unit">attempts</span></div></div>
+            <div class="config-row"><span class="config-label">Escalation Delay</span><div><input class="config-input" data-field="sms-delay" value="10" onchange="onConfigChange(this)"><span class="config-unit">min</span></div></div>
+            <div class="config-row"><span class="config-label">Quiet Hours</span><div><input class="config-input" value="9 PM" style="width:56px" onchange="onConfigChange(this)"> <span class="config-unit">to</span> <input class="config-input" value="8 AM" style="width:56px" onchange="onConfigChange(this)"></div></div>
+            <div class="config-row"><span class="config-label">Hard Fail</span><select class="config-select" onchange="onConfigChange(this)"><option>Escalate Immediately</option><option>Hold</option><option>Stop</option></select></div>
+          </div>
+          <!-- Email -->
+          <div class="config-card">
+            <div class="config-card-header"><div class="config-icon email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><h4>Email Settings</h4></div>
+            <div class="config-row"><span class="config-label">Enabled</span><div class="toggle on" data-toggle="email-enabled" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Bounce Retries</span><div><input class="config-input" data-field="email-retries" value="2" onchange="onConfigChange(this)"><span class="config-unit">attempts</span></div></div>
+            <div class="config-row"><span class="config-label">Escalation Delay</span><div><input class="config-input" data-field="email-delay" value="8" onchange="onConfigChange(this)"><span class="config-unit">hrs</span></div></div>
+            <div class="config-row"><span class="config-label">Track Opens</span><div class="toggle on" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">No-Open Escalation</span><div><input class="config-input" value="24" onchange="onConfigChange(this)"><span class="config-unit">hrs</span></div></div>
+          </div>
+          <!-- Print -->
+          <div class="config-card">
+            <div class="config-card-header"><div class="config-icon mail"><svg viewBox="0 0 24 24"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><h4>Print / Mail Settings</h4></div>
+            <div class="config-row"><span class="config-label">Enabled</span><div class="toggle on" data-toggle="print-enabled" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+            <div class="config-row"><span class="config-label">Batch Cutoff</span><div><input class="config-input" value="6:00 PM" style="width:72px" onchange="onConfigChange(this)"></div></div>
+            <div class="config-row"><span class="config-label">Hold Before Print</span><div><input class="config-input" value="1" onchange="onConfigChange(this)"><span class="config-unit">days</span></div></div>
+            <div class="config-row"><span class="config-label">Priority Override</span><select class="config-select" onchange="onConfigChange(this)"><option>Critical = Same Day</option><option>Standard Batch</option></select></div>
+            <div class="config-row"><span class="config-label">Return Mail Scan</span><div class="toggle on" onclick="toggleSwitch(this)"><div class="knob"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ FILE TRACKER PAGE ═══════════ -->
+    <div class="page" id="page-tracker">
+      <div class="section">
+        <div class="section-header"><h3>File Tracker</h3>
+          <div class="tab-bar" id="tracker-tabs">
+            <button class="active" data-filter="all">All</button>
+            <button data-filter="transit">In Transit</button>
+            <button data-filter="escalated">Escalated</button>
+            <button data-filter="failed">Failed</button>
+          </div>
+        </div>
+        <div class="tracker-card">
+          <div class="search-bar">
+            <input class="search-input" id="file-search" placeholder="Search by File ID, recipient, or type..." oninput="filterFiles()">
+          </div>
+          <table class="file-table">
+            <thead><tr><th>File ID</th><th>Recipient</th><th>Type</th><th>Status</th><th>Progress</th><th>Time</th><th>Next Action</th></tr></thead>
+            <tbody id="file-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ COMPLIANCE PAGE ═══════════ -->
+    <div class="page" id="page-compliance">
+      <div class="section">
+        <div class="section-header"><h3>Compliance Status</h3></div>
+        <div class="compliance-banner">
+          <div class="compliance-badges">
+            <div class="comp-badge"><div class="comp-badge-icon soc2">S2</div><div class="comp-badge-text"><div class="comp-name">SOC 2 Type II</div><div class="comp-status">Compliant</div></div></div>
+            <div class="comp-badge"><div class="comp-badge-icon hipaa">H</div><div class="comp-badge-text"><div class="comp-name">HIPAA</div><div class="comp-status">Compliant</div></div></div>
+            <div class="comp-badge"><div class="comp-badge-icon tcpa">T</div><div class="comp-badge-text"><div class="comp-name">TCPA</div><div class="comp-status">Enforced</div></div></div>
+            <div class="comp-badge"><div class="comp-badge-icon encrypt">E</div><div class="comp-badge-text"><div class="comp-name">AES-256</div><div class="comp-status">At rest &amp; in transit</div></div></div>
+          </div>
+          <button class="btn" onclick="showToast('Compliance report downloaded')">Download Report</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ ACCESS PAGE ═══════════ -->
+    <div class="page" id="page-access">
+      <div class="section">
+        <div class="section-header"><h3>Users &amp; Roles</h3><button class="btn btn-primary" onclick="showToast('Invite sent')">+ Invite User</button></div>
+        <div class="rbac-card">
+          <div class="card-title">Team Access</div>
+          <div class="card-desc">Role-based permissions for this account. Each role scopes visibility and edit rights.</div>
+          <ul class="role-list">
+            <li class="role-item"><div class="role-avatar admin">CB</div><div class="role-info"><div class="role-name">Chase Butler</div><div class="role-email">c.butler@healthwaresystems.com</div></div><span class="role-badge admin">Admin</span></li>
+            <li class="role-item"><div class="role-avatar sales">KR</div><div class="role-info"><div class="role-name">Karen Reynolds</div><div class="role-email">k.reynolds@healthwaresystems.com</div></div><span class="role-badge sales">Sales</span></li>
+            <li class="role-item"><div class="role-avatar ops">MJ</div><div class="role-info"><div class="role-name">Mike Jensen</div><div class="role-email">m.jensen@healthwaresystems.com</div></div><span class="role-badge ops">Operations</span></li>
+            <li class="role-item"><div class="role-avatar client">TS</div><div class="role-info"><div class="role-name">Tina Simmons</div><div class="role-email">tsimmons@regionalmedical.org</div></div><span class="role-badge client">Client</span></li>
+          </ul>
+          <div class="perm-grid">
+            <div class="perm-header"><span>Permission</span><span>Admin</span><span>Sales</span><span>Ops</span><span>Client</span></div>
+            <div class="perm-row"><span>Edit gate timing</span><span class="perm-check">&#10003;</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span><span class="perm-dash">&#8212;</span></div>
+            <div class="perm-row"><span>Set guardrails</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span></div>
+            <div class="perm-row"><span>View file tracker</span><span class="perm-check">&#10003;</span><span class="perm-check">&#10003;</span><span class="perm-check">&#10003;</span><span class="perm-check">&#10003;</span></div>
+            <div class="perm-row"><span>Export reports</span><span class="perm-check">&#10003;</span><span class="perm-check">&#10003;</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span></div>
+            <div class="perm-row"><span>View audit log</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span></div>
+            <div class="perm-row"><span>Manage users</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span><span class="perm-dash">&#8212;</span><span class="perm-dash">&#8212;</span></div>
+            <div class="perm-row"><span>Pause waterfall</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span><span class="perm-check">&#10003;</span><span class="perm-dash">&#8212;</span></div>
+            <div class="perm-row"><span>Access PHI/PII</span><span class="perm-check">&#10003;</span><span class="perm-lock">Masked</span><span class="perm-lock">Masked</span><span class="perm-lock">Masked</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ ANALYTICS PAGE ═══════════ -->
+    <div class="page" id="page-analytics">
+
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-label">Total Delivered</div><div class="kpi-value green">97.4%</div><div class="kpi-delta up">+1.2% vs last month</div></div>
+        <div class="kpi"><div class="kpi-label">Avg Delivery Time</div><div class="kpi-value teal">14 min</div><div class="kpi-delta up">-3 min improvement</div></div>
+        <div class="kpi"><div class="kpi-label">SMS Success Rate</div><div class="kpi-value green">78.4%</div><div class="kpi-delta up">+2.1% vs last month</div></div>
+        <div class="kpi"><div class="kpi-label">Bounce Rate</div><div class="kpi-value red">4.8%</div><div class="kpi-delta down">+0.3% vs last month</div></div>
+        <div class="kpi"><div class="kpi-label">Print Fallthrough</div><div class="kpi-value amber">4.1%</div><div class="kpi-delta up">-1.4% vs last month</div></div>
+      </div>
+
+      <!-- Row 1: Delivery trend + Tier breakdown -->
+      <div class="section">
+        <div class="section-header"><h3>Delivery Analytics</h3>
+          <div class="tab-bar" id="analytics-range-tabs">
+            <button class="active" data-range="7d">7 Days</button>
+            <button data-range="30d">30 Days</button>
+            <button data-range="90d">90 Days</button>
+          </div>
+        </div>
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>Daily Delivery Volume</h4>
+            <div class="chart-desc">Messages processed per day by channel outcome</div>
+            <div class="chart-wrap tall"><canvas id="chart-daily-volume"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Tier Resolution Breakdown</h4>
+            <div class="chart-desc">Where messages are resolved across the waterfall</div>
+            <div class="chart-wrap tall"><canvas id="chart-tier-donut"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Escalation trend + Response time -->
+      <div class="section">
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>Escalation Rate Over Time</h4>
+            <div class="chart-desc">Percentage of messages escalated beyond SMS each day</div>
+            <div class="chart-wrap"><canvas id="chart-escalation-trend"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Average Time to Delivery</h4>
+            <div class="chart-desc">Mean delivery time by channel tier (minutes/hours)</div>
+            <div class="chart-wrap"><canvas id="chart-delivery-time"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Channel performance + Failure reasons -->
+      <div class="section">
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>Channel Performance Trend</h4>
+            <div class="chart-desc">Success rate by channel over the past 30 days</div>
+            <div class="chart-wrap"><canvas id="chart-channel-perf"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Failure Reasons</h4>
+            <div class="chart-desc">Why messages fail at each tier</div>
+            <div class="chart-wrap"><canvas id="chart-failure-reasons"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Hourly heatmap style -->
+      <div class="section">
+        <div class="chart-grid">
+          <div class="chart-card full">
+            <h4>Hourly Message Volume</h4>
+            <div class="chart-desc">Message send volume by hour of day — identify peak windows and quiet hour gaps</div>
+            <div class="chart-wrap"><canvas id="chart-hourly"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ COST ANALYSIS PAGE ═══════════ -->
+    <div class="page" id="page-costs">
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-label">Total Spend (MTD)</div><div class="kpi-value">$18,432</div><div class="kpi-delta neutral">March 2026</div></div>
+        <div class="kpi"><div class="kpi-label">Cost Per Delivery</div><div class="kpi-value teal">$0.047</div><div class="kpi-delta up">-$0.003 vs Feb</div></div>
+        <div class="kpi"><div class="kpi-label">SMS Cost</div><div class="kpi-value green">$4,829</div><div class="kpi-delta neutral">$0.012 / msg</div></div>
+        <div class="kpi"><div class="kpi-label">Email Cost</div><div class="kpi-value purple">$1,247</div><div class="kpi-delta neutral">$0.008 / msg</div></div>
+        <div class="kpi"><div class="kpi-label">Print Cost</div><div class="kpi-value amber">$12,356</div><div class="kpi-delta down">$0.89 / letter</div></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>Cost Analysis</h3>
+          <div class="tab-bar" id="cost-range-tabs">
+            <button class="active" data-crange="monthly">Monthly</button>
+            <button data-crange="quarterly">Quarterly</button>
+            <button data-crange="yearly">Yearly</button>
+          </div>
+        </div>
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>Cost by Channel (Monthly)</h4>
+            <div class="chart-desc">How spend distributes across SMS, email, and print</div>
+            <div class="chart-wrap tall"><canvas id="chart-cost-channel"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Cost Trend</h4>
+            <div class="chart-desc">Monthly spend over the past 6 months by channel</div>
+            <div class="chart-wrap tall"><canvas id="chart-cost-trend"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="chart-grid">
+          <div class="chart-card">
+            <h4>Cost Per Message by Channel</h4>
+            <div class="chart-desc">Unit economics — cost to deliver one message per channel</div>
+            <div class="chart-wrap"><canvas id="chart-unit-cost"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <h4>Channel Cost Breakdown</h4>
+            <div class="chart-desc">Detailed cost analysis per channel this month</div>
+            <table class="cost-table">
+              <thead><tr><th>Channel</th><th>Messages</th><th>Unit Cost</th><th>Total</th><th>% of Spend</th></tr></thead>
+              <tbody>
+                <tr><td>SMS</td><td>402,180</td><td class="cost-val green">$0.012</td><td class="cost-val">$4,826</td><td>26.2%</td></tr>
+                <tr><td>Email</td><td>155,875</td><td class="cost-val green">$0.008</td><td class="cost-val">$1,247</td><td>6.8%</td></tr>
+                <tr><td>Print / Mail</td><td>13,883</td><td class="cost-val red">$0.890</td><td class="cost-val">$12,356</td><td>67.0%</td></tr>
+              </tbody>
+            </table>
+            <div class="savings-highlight">
+              <div><div class="savings-val">$6,240</div></div>
+              <div class="savings-text"><strong>Estimated monthly savings</strong> by increasing SMS resolution from 78% to 85%. Every 1% shift from print to SMS saves ~$890/month.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ AUDIT PAGE ═══════════ -->
+    <div class="page" id="page-audit">
+      <div class="section">
+        <div class="section-header"><h3>Audit Log</h3>
+          <div class="tab-bar" id="audit-tabs">
+            <button class="active" data-afilter="all">All Events</button>
+            <button data-afilter="config">Config</button>
+            <button data-afilter="auth">Auth</button>
+            <button data-afilter="alert">Alerts</button>
+          </div>
+        </div>
+        <div class="audit-card">
+          <div class="card-desc">Immutable record of all actions. SOC 2 compliant, 90-day retention, exportable.</div>
+          <ul class="audit-list" id="audit-list"></ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ─── State ───
+const state = {
+  gate1: { delay: 10, unit: 'min', retries: 2, fail: 'Escalate Immediately' },
+  gate2: { delay: 8, unit: 'hours', retries: 2, fail: 'Escalate Immediately' },
+  smsEnabled: true, emailEnabled: true, printEnabled: true,
+  currentClient: 'Regional Medical Center',
+  currentIndustry: 'healthcare'
+};
+
+const templates = {
+  healthcare: { smsDelay:10, emailDelay:8, smsRetries:2, emailRetries:2 },
+  collections: { smsDelay:15, emailDelay:12, smsRetries:3, emailRetries:2 },
+  utilities: { smsDelay:15, emailDelay:24, smsRetries:2, emailRetries:1 },
+  custom: { smsDelay:10, emailDelay:8, smsRetries:2, emailRetries:2 }
+};
+
+const clientStats = {
+  'Regional Medical Center': { total:'12,847', sms:'78.4%', smsSub:'10,073 recipients reached', email:'16.2%', emailSub:'2,081 messages', print:'4.1%', printSub:'527 letters queued' },
+  'Lakeside Family Practice': { total:'3,214', sms:'82.1%', smsSub:'2,639 recipients reached', email:'13.5%', emailSub:'434 messages', print:'3.2%', printSub:'103 letters queued' },
+  'Summit Collections': { total:'28,491', sms:'61.3%', smsSub:'17,473 recipients reached', email:'24.8%', emailSub:'7,066 messages', print:'11.2%', printSub:'3,191 letters queued' }
+};
+
+const files = [
+  { id:'WF-0847', name:'Jane Morrison', type:'Appt Reminder', status:'SMS Delivered', badge:'badge-green', dot:'green', progress:100, pcolor:'green', time:'Complete', next:'None', nextClass:'muted', category:'complete' },
+  { id:'WF-0848', name:'Robert Chen', type:'Balance Due', status:'SMS Failed', badge:'badge-red', dot:'red', progress:60, pcolor:'blue', time:'4 min', next:'Email in 6 min', nextClass:'teal', category:'failed' },
+  { id:'WF-0851', name:'Maria Santos', type:'Statement', status:'Email Sent', badge:'badge-green', dot:'green', progress:75, pcolor:'purple', time:'3 hrs', next:'Monitoring opens', nextClass:'muted', category:'transit' },
+  { id:'WF-0852', name:'David Park', type:'Pre-Visit', status:'Email Queued', badge:'badge-purple', dot:'purple', progress:45, pcolor:'purple', time:'8 min', next:'Sending...', nextClass:'purple', category:'escalated' },
+  { id:'WF-0839', name:'Linda Williams', type:'Past Due', status:'Print Queue', badge:'badge-amber', dot:'amber', progress:90, pcolor:'amber', time:'6 hrs', next:'Batch at 6 PM', nextClass:'amber', category:'transit' },
+  { id:'WF-0855', name:'James O\'Brien', type:'Appt Reminder', status:'Pre-Processing', badge:'badge-blue', dot:'blue', progress:20, pcolor:'blue', time:'2 min', next:'SMS pending', nextClass:'teal', category:'transit' },
+  { id:'WF-0861', name:'Sarah Kim', type:'Balance Due', status:'SMS Failed', badge:'badge-red', dot:'red', progress:30, pcolor:'blue', time:'1 min', next:'Retry 1 of 2', nextClass:'teal', category:'failed' },
+  { id:'WF-0862', name:'Tom Brady', type:'Statement', status:'Email Bounced', badge:'badge-red', dot:'red', progress:50, pcolor:'amber', time:'2 hrs', next:'Print in 6 hrs', nextClass:'amber', category:'escalated' }
+];
+
+const auditEntries = [
+  { type:'config', icon:'config', msg:'<strong>Chase Butler</strong> changed SMS escalation delay from 15 min to 10 min for Regional Medical Center', time:'Today, 2:34 PM', ip:'192.168.1.42', role:'Admin' },
+  { type:'auth', icon:'auth', msg:'<strong>Karen Reynolds</strong> logged in via SSO (Okta)', time:'Today, 2:12 PM', ip:'10.0.0.88', role:'Sales' },
+  { type:'config', icon:'export', msg:'<strong>Mike Jensen</strong> exported delivery report for March 2026', time:'Today, 1:47 PM', ip:'10.0.0.12', role:'Operations' },
+  { type:'alert', icon:'alert', msg:'<strong>System</strong> blocked Tina Simmons from accessing PHI field (role: Client, permission denied)', time:'Today, 1:22 PM', ip:'203.45.67.89', role:'Client' },
+  { type:'config', icon:'access', msg:'<strong>Chase Butler</strong> added Tina Simmons as Client viewer for Regional Medical Center', time:'Today, 11:05 AM', ip:'192.168.1.42', role:'Admin' },
+  { type:'config', icon:'config', msg:'<strong>Karen Reynolds</strong> created new client profile: Lakeside Family Practice (Healthcare template)', time:'Yesterday, 4:18 PM', ip:'10.0.0.88', role:'Sales' },
+  { type:'alert', icon:'alert', msg:'<strong>System</strong> enforced guardrail: Karen Reynolds attempted to set SMS delay below 2 min minimum (blocked)', time:'Yesterday, 3:50 PM', ip:'10.0.0.88', role:'Sales' },
+  { type:'auth', icon:'auth', msg:'<strong>System</strong> failed login attempt for unknown@ext.com (IP blocked after 3 attempts)', time:'Yesterday, 2:07 PM', ip:'91.202.45.11', role:'Unknown' }
+];
+
+const auditIconSvg = {
+  config: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg>',
+  auth: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  alert: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  export: '<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  access: '<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>'
+};
+
+// ─── Navigation ───
+document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    const page = link.dataset.page;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const el = document.getElementById('page-' + page);
+    if (el) el.classList.add('active');
+    document.getElementById('page-title').textContent = link.textContent.trim().replace(/\d+$/, '').trim();
+  });
+});
+
+// ─── Client Dropdown ───
+function toggleClientDropdown() {
+  document.getElementById('client-dropdown').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#client-pill')) document.getElementById('client-dropdown').classList.remove('open');
+});
+document.querySelectorAll('.client-option').forEach(opt => {
+  opt.addEventListener('click', e => {
+    e.stopPropagation();
+    document.querySelectorAll('.client-option').forEach(o => o.classList.remove('active'));
+    opt.classList.add('active');
+    state.currentClient = opt.dataset.client;
+    state.currentIndustry = opt.dataset.industry;
+    document.getElementById('client-name').textContent = state.currentClient;
+    document.getElementById('client-dropdown').classList.remove('open');
+    updateStats();
+    showToast('Switched to ' + state.currentClient);
+  });
+});
+
+function updateStats() {
+  const s = clientStats[state.currentClient] || clientStats['Regional Medical Center'];
+  document.getElementById('stat-total').textContent = s.total;
+  document.getElementById('stat-sms').textContent = s.sms;
+  document.getElementById('stat-sms-sub').textContent = s.smsSub;
+  document.getElementById('stat-email').textContent = s.email;
+  document.getElementById('stat-email-sub').textContent = s.emailSub;
+  document.getElementById('stat-print').textContent = s.print;
+  document.getElementById('stat-print-sub').textContent = s.printSub;
+  document.getElementById('wf-sms-pct').textContent = s.sms;
+  document.getElementById('wf-email-pct').textContent = s.email;
+  document.getElementById('wf-print-pct').textContent = s.print;
+  if (document.getElementById('wb-sms-pct')) {
+    document.getElementById('wb-sms-pct').textContent = s.sms;
+    document.getElementById('wb-email-pct').textContent = s.email;
+    document.getElementById('wb-print-pct').textContent = s.print;
+  }
+}
+
+// ─── Toggle Switches ───
+function toggleSwitch(el) {
+  el.classList.toggle('on');
+  const key = el.dataset.toggle;
+  if (key === 'sms-enabled') { state.smsEnabled = el.classList.contains('on'); document.getElementById('tier-sms')?.classList.toggle('disabled', !state.smsEnabled); }
+  if (key === 'email-enabled') { state.emailEnabled = el.classList.contains('on'); document.getElementById('tier-email')?.classList.toggle('disabled', !state.emailEnabled); }
+  if (key === 'print-enabled') { state.printEnabled = el.classList.contains('on'); document.getElementById('tier-print')?.classList.toggle('disabled', !state.printEnabled); }
+  addAuditEntry('config', '<strong>Chase Butler</strong> toggled ' + (key||'setting') + ' ' + (el.classList.contains('on') ? 'on' : 'off'));
+  showToast('Setting updated');
+}
+
+// ─── Config Change ───
+function onConfigChange(el) {
+  const field = el.dataset.field;
+  if (field === 'sms-delay') { state.gate1.delay = parseInt(el.value) || 10; updateGateDisplays(); }
+  if (field === 'email-delay') { state.gate2.delay = parseInt(el.value) || 8; updateGateDisplays(); }
+  if (field === 'sms-retries') { state.gate1.retries = parseInt(el.value) || 2; updateGateDisplays(); }
+  if (field === 'email-retries') { state.gate2.retries = parseInt(el.value) || 2; updateGateDisplays(); }
+  // Guardrail check
+  if (field === 'sms-delay' && parseInt(el.value) < 2) {
+    el.value = 2; state.gate1.delay = 2;
+    showToast('Guardrail: SMS delay minimum is 2 min');
+    addAuditEntry('alert', '<strong>System</strong> enforced guardrail: SMS delay cannot be below 2 min');
+    updateGateDisplays();
+    return;
+  }
+  addAuditEntry('config', '<strong>Chase Butler</strong> updated ' + (field || 'setting') + ' to ' + el.value);
+  showToast('Configuration saved');
+}
+
+// ─── Gate Modal ───
+let editingGate = 1;
+function openGateModal(num) {
+  editingGate = num;
+  const g = num === 1 ? state.gate1 : state.gate2;
+  document.getElementById('gate-modal-title').textContent = 'Edit Gate ' + num;
+  document.getElementById('gate-delay-input').value = g.delay;
+  document.getElementById('gate-delay-unit').textContent = g.unit;
+  document.getElementById('gate-retry-input').value = g.retries;
+  document.getElementById('gate-fail-select').value = g.fail;
+  document.getElementById('gate-modal').classList.add('open');
+}
+function closeGateModal() { document.getElementById('gate-modal').classList.remove('open'); }
+function saveGateModal() {
+  const g = editingGate === 1 ? state.gate1 : state.gate2;
+  const newDelay = parseInt(document.getElementById('gate-delay-input').value) || g.delay;
+  const newRetries = parseInt(document.getElementById('gate-retry-input').value) || g.retries;
+  if (editingGate === 1 && newDelay < 2) {
+    showToast('Guardrail: SMS delay minimum is 2 min');
+    addAuditEntry('alert', '<strong>System</strong> enforced guardrail on Gate 1 delay');
+    return;
+  }
+  const oldDelay = g.delay;
+  g.delay = newDelay;
+  g.retries = newRetries;
+  g.fail = document.getElementById('gate-fail-select').value;
+  // Update settings page inputs
+  if (editingGate === 1) {
+    const smsDelayInput = document.querySelector('[data-field="sms-delay"]');
+    if (smsDelayInput) smsDelayInput.value = g.delay;
+    const smsRetryInput = document.querySelector('[data-field="sms-retries"]');
+    if (smsRetryInput) smsRetryInput.value = g.retries;
+  } else {
+    const emailDelayInput = document.querySelector('[data-field="email-delay"]');
+    if (emailDelayInput) emailDelayInput.value = g.delay;
+    const emailRetryInput = document.querySelector('[data-field="email-retries"]');
+    if (emailRetryInput) emailRetryInput.value = g.retries;
+  }
+  updateGateDisplays();
+  closeGateModal();
+  addAuditEntry('config', '<strong>Chase Butler</strong> changed Gate ' + editingGate + ' delay from ' + oldDelay + ' ' + g.unit + ' to ' + g.delay + ' ' + g.unit);
+  showToast('Gate ' + editingGate + ' updated');
+}
+
+function updateGateDisplays() {
+  document.getElementById('gate1-display').textContent = state.gate1.delay + ' ' + state.gate1.unit;
+  document.getElementById('gate1-sub').textContent = state.gate1.retries + ' retries, then release';
+  document.getElementById('gate2-display').textContent = state.gate2.delay + ' ' + state.gate2.unit;
+  document.getElementById('gate2-sub').textContent = 'Soft bounce retry x' + state.gate2.retries;
+  if (document.getElementById('wb-gate1')) {
+    document.getElementById('wb-gate1').textContent = state.gate1.delay + ' ' + state.gate1.unit;
+    document.getElementById('wb-gate2').textContent = state.gate2.delay + ' ' + state.gate2.unit;
+  }
+  // Update timeline
+  document.getElementById('tl-wait1').textContent = 'up to ' + state.gate1.delay + ' min';
+  document.getElementById('tl-email-time').textContent = 'T + ' + state.gate1.delay + ' min';
+  document.getElementById('tl-wait2').textContent = 'up to ' + state.gate2.delay + ' hrs';
+  const totalMin = state.gate1.delay;
+  const totalHrs = state.gate2.delay;
+  document.getElementById('tl-print-time').textContent = 'T + ' + totalHrs + ' hrs ' + totalMin + ' min';
+}
+
+// ─── Industry Templates ───
+document.querySelectorAll('#industry-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#industry-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const t = templates[btn.dataset.industry];
+    if (!t) return;
+    state.gate1.delay = t.smsDelay; state.gate1.retries = t.smsRetries;
+    state.gate2.delay = t.emailDelay; state.gate2.retries = t.emailRetries;
+    const sd = document.querySelector('[data-field="sms-delay"]'); if(sd) sd.value = t.smsDelay;
+    const sr = document.querySelector('[data-field="sms-retries"]'); if(sr) sr.value = t.smsRetries;
+    const ed = document.querySelector('[data-field="email-delay"]'); if(ed) ed.value = t.emailDelay;
+    const er = document.querySelector('[data-field="email-retries"]'); if(er) er.value = t.emailRetries;
+    updateGateDisplays();
+    showToast('Applied ' + btn.textContent + ' template');
+  });
+});
+
+// ─── Waterfall View Tabs ───
+document.querySelectorAll('#wf-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#wf-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// ─── File Tracker ───
+let fileFilter = 'all';
+function renderFiles() {
+  const search = (document.getElementById('file-search')?.value || '').toLowerCase();
+  const tbody = document.getElementById('file-tbody');
+  tbody.innerHTML = '';
+  files.filter(f => {
+    if (fileFilter === 'transit' && f.category !== 'transit') return false;
+    if (fileFilter === 'escalated' && f.category !== 'escalated') return false;
+    if (fileFilter === 'failed' && f.category !== 'failed') return false;
+    if (search && !f.id.toLowerCase().includes(search) && !f.name.toLowerCase().includes(search) && !f.type.toLowerCase().includes(search)) return false;
+    return true;
+  }).forEach(f => {
+    tbody.innerHTML += `<tr>
+      <td class="file-id">${f.id}</td><td>${f.name}</td><td>${f.type}</td>
+      <td><span class="badge ${f.badge}"><span class="dot"></span>${f.status}</span></td>
+      <td><div class="progress"><div class="progress-fill ${f.pcolor}" style="width:${f.progress}%"></div></div></td>
+      <td>${f.time}</td><td class="next-action ${f.nextClass}">${f.next}</td>
+    </tr>`;
+  });
+}
+document.querySelectorAll('#tracker-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#tracker-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    fileFilter = btn.dataset.filter;
+    renderFiles();
+  });
+});
+function filterFiles() { renderFiles(); }
+
+// ─── Audit Log ───
+let auditFilter = 'all';
+function renderAudit() {
+  const list = document.getElementById('audit-list');
+  list.innerHTML = '';
+  auditEntries.filter(a => auditFilter === 'all' || a.type === auditFilter).forEach(a => {
+    list.innerHTML += `<li class="audit-item">
+      <div class="audit-icon-wrap ${a.icon}">${auditIconSvg[a.icon]||''}</div>
+      <div class="audit-body"><div class="audit-msg">${a.msg}</div>
+      <div class="audit-meta"><span>${a.time}</span><span class="audit-ip">${a.ip}</span><span>${a.role}</span></div></div>
+    </li>`;
+  });
+}
+document.querySelectorAll('#audit-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#audit-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    auditFilter = btn.dataset.afilter;
+    renderAudit();
+  });
+});
+
+function addAuditEntry(type, msg) {
+  const now = new Date();
+  const time = 'Today, ' + now.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+  auditEntries.unshift({ type, icon: type, msg, time, ip:'192.168.1.42', role:'Admin' });
+  renderAudit();
+}
+
+// ─── New Client ───
+function openNewClientModal() { document.getElementById('new-client-modal').classList.add('open'); }
+function closeNewClientModal() { document.getElementById('new-client-modal').classList.remove('open'); }
+function createNewClient() {
+  const name = document.getElementById('new-client-name').value.trim();
+  if (!name) { showToast('Please enter a client name'); return; }
+  const industry = document.getElementById('new-client-industry').value.toLowerCase();
+  // Add to dropdown
+  const dropdown = document.getElementById('client-dropdown');
+  const opt = document.createElement('div');
+  opt.className = 'client-option';
+  opt.dataset.client = name;
+  opt.dataset.industry = industry;
+  opt.innerHTML = '<span class="dot"></span>' + name;
+  opt.addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.querySelectorAll('.client-option').forEach(o => o.classList.remove('active'));
+    this.classList.add('active');
+    state.currentClient = this.dataset.client;
+    document.getElementById('client-name').textContent = state.currentClient;
+    document.getElementById('client-dropdown').classList.remove('open');
+    updateStats();
+  });
+  dropdown.appendChild(opt);
+  // Add stats
+  clientStats[name] = { total:'0', sms:'0%', smsSub:'New account', email:'0%', emailSub:'No data yet', print:'0%', printSub:'No data yet' };
+  closeNewClientModal();
+  addAuditEntry('config', '<strong>Chase Butler</strong> created new client profile: ' + name + ' (' + industry + ' template)');
+  showToast('Client "' + name + '" created');
+  document.getElementById('new-client-name').value = '';
+}
+
+// ─── Toast ───
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── Close modals on overlay click ───
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+});
+
+// ─── Analytics Range Tabs ───
+document.querySelectorAll('#analytics-range-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#analytics-range-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showToast('Showing ' + btn.textContent + ' data');
+  });
+});
+document.querySelectorAll('#cost-range-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#cost-range-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showToast('Showing ' + btn.textContent + ' data');
+  });
+});
+
+// ─── Chart.js Defaults ───
+const chartFont = { family: "'Inter', system-ui, sans-serif", size: 11 };
+const gridColor = '#f1f5f9';
+const tickColor = '#94a3b8';
+const smsCl = '#0891b2';
+const emailCl = '#7c3aed';
+const printCl = '#d97706';
+const failCl = '#ef4444';
+const successCl = '#10b981';
+
+Chart.defaults.font.family = chartFont.family;
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyleWidth = 8;
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.plugins.legend.labels.color = '#64748b';
+Chart.defaults.plugins.tooltip.backgroundColor = '#0f172a';
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.titleFont = { weight: '600', size: 12 };
+Chart.defaults.elements.point.radius = 3;
+Chart.defaults.elements.point.hoverRadius = 5;
+
+const scaleOpts = { grid:{ color: gridColor, drawBorder:false }, ticks:{ color: tickColor, padding:8 }, border:{ display:false } };
+
+function initCharts() {
+  // 1. Daily Volume — stacked bar
+  const days7 = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  new Chart(document.getElementById('chart-daily-volume'), {
+    type:'bar',
+    data:{
+      labels: days7,
+      datasets:[
+        { label:'SMS Delivered', data:[9800,10200,9600,10073,11200,7400,8100], backgroundColor: smsCl, borderRadius:4 },
+        { label:'Email Delivered', data:[1900,2100,1800,2081,2400,1600,1700], backgroundColor: emailCl, borderRadius:4 },
+        { label:'Print Queued', data:[480,520,440,527,600,380,420], backgroundColor: printCl, borderRadius:4 },
+        { label:'Failed', data:[140,160,130,166,180,100,120], backgroundColor: failCl, borderRadius:4 }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:{...scaleOpts, stacked:true}, y:{...scaleOpts, stacked:true, ticks:{...scaleOpts.ticks, callback:v=>v>=1000?(v/1000)+'k':v}} },
+      plugins:{ legend:{position:'bottom'} }
+    }
+  });
+
+  // 2. Tier Donut
+  new Chart(document.getElementById('chart-tier-donut'), {
+    type:'doughnut',
+    data:{
+      labels:['SMS (Tier 1)','Email (Tier 2)','Print (Tier 3)','Undeliverable'],
+      datasets:[{ data:[78.4,16.2,4.1,1.3], backgroundColor:[smsCl, emailCl, printCl, '#e2e8f0'], borderWidth:0, hoverOffset:8 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'68%',
+      plugins:{
+        legend:{ position:'bottom' },
+        tooltip:{ callbacks:{ label: ctx => ctx.label + ': ' + ctx.parsed + '%' } }
+      }
+    }
+  });
+
+  // 3. Escalation Trend — line
+  new Chart(document.getElementById('chart-escalation-trend'), {
+    type:'line',
+    data:{
+      labels: ['Mar 17','Mar 18','Mar 19','Mar 20','Mar 21','Mar 22','Mar 23'],
+      datasets:[
+        { label:'To Email', data:[18.1,17.4,16.8,17.2,15.9,16.5,16.2], borderColor: emailCl, backgroundColor: emailCl+'20', fill:true, tension:.4 },
+        { label:'To Print', data:[5.2,4.8,4.5,4.9,4.3,4.0,4.1], borderColor: printCl, backgroundColor: printCl+'20', fill:true, tension:.4 }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:scaleOpts, y:{...scaleOpts, ticks:{...scaleOpts.ticks, callback:v=>v+'%'}} },
+      plugins:{ legend:{position:'bottom'} }
+    }
+  });
+
+  // 4. Avg Delivery Time — horizontal bar
+  new Chart(document.getElementById('chart-delivery-time'), {
+    type:'bar',
+    data:{
+      labels:['SMS','Email','Print'],
+      datasets:[{ label:'Avg Time', data:[2.4, 48, 1440], backgroundColor:[smsCl, emailCl, printCl], borderRadius:6, barThickness:32 }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      scales:{ x:{...scaleOpts, ticks:{...scaleOpts.ticks, callback:v=>v<60?v+' min':Math.round(v/60)+' hrs'}}, y:scaleOpts },
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: ctx => { const v=ctx.parsed.x; return v<60?v+' minutes':Math.round(v/60)+' hours'; } } } }
+    }
+  });
+
+  // 5. Channel Performance — multi-line
+  const days30 = Array.from({length:30},(_,i)=>'Mar '+(i+1));
+  const smsPerf = [76,77,78,77,79,78,80,79,78,77,78,79,80,81,79,78,77,78,79,80,79,78,77,78,79,78,79,78,78,78];
+  const emailPerf = [82,83,84,85,84,83,85,86,85,84,85,86,87,86,85,84,83,84,85,86,87,86,85,86,87,86,85,86,86,87];
+  const printPerf = [95,95,96,95,96,95,96,97,96,95,96,95,96,97,96,95,96,95,96,97,96,95,96,97,96,95,96,97,97,97];
+  new Chart(document.getElementById('chart-channel-perf'), {
+    type:'line',
+    data:{
+      labels: days30,
+      datasets:[
+        { label:'SMS Success', data:smsPerf, borderColor:smsCl, tension:.3, borderWidth:2 },
+        { label:'Email Success', data:emailPerf, borderColor:emailCl, tension:.3, borderWidth:2 },
+        { label:'Print Success', data:printPerf, borderColor:printCl, tension:.3, borderWidth:2 }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:{...scaleOpts, ticks:{...scaleOpts.ticks, maxTicksLimit:10}}, y:{...scaleOpts, min:70, max:100, ticks:{...scaleOpts.ticks, callback:v=>v+'%'}} },
+      plugins:{ legend:{position:'bottom'} }
+    }
+  });
+
+  // 6. Failure Reasons — horizontal bar
+  new Chart(document.getElementById('chart-failure-reasons'), {
+    type:'bar',
+    data:{
+      labels:['Invalid Number','Hard Bounce','Soft Bounce','Carrier Block','Opt-Out','No Address','Bad Email'],
+      datasets:[{ label:'Count', data:[842,634,412,287,198,156,89], backgroundColor:[failCl,failCl+'cc',failCl+'aa',failCl+'88',failCl+'66',failCl+'44',failCl+'33'], borderRadius:4, barThickness:20 }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      scales:{ x:scaleOpts, y:scaleOpts },
+      plugins:{ legend:{display:false} }
+    }
+  });
+
+  // 7. Hourly Volume — bar
+  const hours = Array.from({length:24},(_,i)=>{ const h=i%12||12; const ap=i<12?'AM':'PM'; return h+ap; });
+  const hourlyData = [20,10,5,3,2,8,120,890,2100,1850,1640,1420,1580,1690,1820,1740,1580,1200,640,320,180,90,50,30];
+  new Chart(document.getElementById('chart-hourly'), {
+    type:'bar',
+    data:{
+      labels: hours,
+      datasets:[{ label:'Messages', data:hourlyData, backgroundColor: hourlyData.map(v=>v<100?'#e2e8f0':v<500?smsCl+'44':v<1000?smsCl+'88':smsCl), borderRadius:3 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:scaleOpts, y:{...scaleOpts, ticks:{...scaleOpts.ticks, callback:v=>v>=1000?(v/1000)+'k':v}} },
+      plugins:{
+        legend:{display:false},
+        tooltip:{ callbacks:{ afterLabel: ctx => { const h=ctx.dataIndex; return h>=21||h<8?'(Quiet hours)':''; } } }
+      }
+    }
+  });
+
+  // 8. Cost by Channel — donut
+  new Chart(document.getElementById('chart-cost-channel'), {
+    type:'doughnut',
+    data:{
+      labels:['SMS','Email','Print / Mail'],
+      datasets:[{ data:[4829,1247,12356], backgroundColor:[smsCl, emailCl, printCl], borderWidth:0, hoverOffset:8 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'68%',
+      plugins:{
+        legend:{position:'bottom'},
+        tooltip:{ callbacks:{ label: ctx => ctx.label+': $'+ctx.parsed.toLocaleString() } }
+      }
+    }
+  });
+
+  // 9. Cost Trend — stacked area
+  const months = ['Oct','Nov','Dec','Jan','Feb','Mar'];
+  new Chart(document.getElementById('chart-cost-trend'), {
+    type:'line',
+    data:{
+      labels: months,
+      datasets:[
+        { label:'SMS', data:[5200,5100,4900,5000,4950,4829], borderColor:smsCl, backgroundColor:smsCl+'30', fill:true, tension:.3 },
+        { label:'Email', data:[1400,1350,1300,1280,1260,1247], borderColor:emailCl, backgroundColor:emailCl+'30', fill:true, tension:.3 },
+        { label:'Print', data:[15800,14900,14200,13600,13100,12356], borderColor:printCl, backgroundColor:printCl+'30', fill:true, tension:.3 }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:scaleOpts, y:{...scaleOpts, ticks:{...scaleOpts.ticks, callback:v=>'$'+(v/1000)+'k'}} },
+      plugins:{ legend:{position:'bottom'} }
+    }
+  });
+
+  // 10. Unit Cost — bar
+  new Chart(document.getElementById('chart-unit-cost'), {
+    type:'bar',
+    data:{
+      labels:['SMS','Email','Print'],
+      datasets:[{ label:'Cost per message', data:[0.012, 0.008, 0.89], backgroundColor:[smsCl, emailCl, printCl], borderRadius:8, barThickness:48 }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      scales:{ x:scaleOpts, y:{...scaleOpts, type:'logarithmic', ticks:{...scaleOpts.ticks, callback:v=>'$'+v}} },
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: ctx=>'$'+ctx.parsed.y+' per message' } } }
+    }
+  });
+}
+
+// ─── Lazy init charts when analytics page is shown ───
+let chartsInitialized = false;
+const origNavHandler = document.querySelectorAll('.nav-link[data-page]');
+origNavHandler.forEach(link => {
+  link.addEventListener('click', () => {
+    if ((link.dataset.page === 'analytics' || link.dataset.page === 'costs') && !chartsInitialized) {
+      setTimeout(initCharts, 50);
+      chartsInitialized = true;
+    }
+  });
+});
+
+// ─── Init ───
+renderFiles();
+renderAudit();
+</script>
+</body>
+</html>
